@@ -9,7 +9,7 @@ Python implementation and exprementation with few simplistic chaotic systems.
   ```
 
 ## License
-Distributed with a GNU GENERAL PUBLIC LICENSE; see [LICENSE](https://github.com/saeedghsh/chaos/blob/master/LICENSE).
+Distributed with a GNU GENERAL PUBLIC LICENSE; see [LICENSE](https://github.com/saeedghsh/ChaoticSystems/blob/master/LICENSE).
 ```
 Copyright (C) Saeed Gholami Shahbandi
 ```
