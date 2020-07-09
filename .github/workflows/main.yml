@@ -8,10 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
-
+        python-version: [3.6, 3.8]
+        
     steps:
     - uses: actions/checkout@v2
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -22,7 +23,8 @@ jobs:
       with:
         # This path is specific to Ubuntu
         path: ~/.cache/pip
-        # Look to see if there is a cache hit for the corresponding requirements file
+        # Look to see if there is a cache hit for
+        # the corresponding requirements file
         key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
@@ -33,6 +35,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
