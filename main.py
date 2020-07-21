@@ -1,13 +1,26 @@
 #!/usr/bin/env python
-"""
-Generation of chaotic processes (e.g. population growth) via logistic map
-"""
+""" Generation of chaotic processes via logistic map"""
 
 from __future__ import print_function
 import argparse
 
-import chaos.logisticmap
-import chaos.plotting
+from chaos.logisticmap import LogisticMap
+from chaos.plotting import SlidingFigure
+
+def main(length: int, count: int):
+    """instantiating the LogisticMap and the plotting object
+
+    Parameters
+    ----------
+    length : int
+        The length of each processes
+    count : int
+        The numebr of processes
+    """
+    
+    LM = LogisticMap(r=0.0, length=length, count=count)
+    SF = SlidingFigure(LM)
+
 
 if __name__ == "__main__":
     PARSER = argparse.ArgumentParser(
@@ -19,7 +32,5 @@ if __name__ == "__main__":
                         action='store', default=50,
                         help='length (time) of [chaotic] processes')
     ARGS = PARSER.parse_args()
-
-    LM = chaos.logisticmap.LogisticMap(
-        r=0.0, length=ARGS.length, count=ARGS.count)
-    SF = chaos.plotting.SlidingFigure(LM)
+    
+    main(ARGS.length, ARGS.count)
