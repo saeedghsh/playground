@@ -45,4 +45,6 @@ jobs:
         
     - name: Test with pytest
       run: |
-        pytest
+        pytest --cov=chaos test/
+        # pytest --cov=chaos --cov-report=html --doctest-modules
+        
