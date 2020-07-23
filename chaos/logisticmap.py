@@ -4,10 +4,15 @@ Currently it only contains one object, namely "LogisticMap"
 
 """
 
-import numpy as np
+
 import typing
 
-logistic_map = lambda r, x: r*x*(1-x)
+import numpy as np
+
+
+def logistic_map(r: float, x: np.array) -> np.array:
+    return r * x * (1 - x)
+
 
 class LogisticMap:
     """An object containing a set of chaotic processes
@@ -35,11 +40,8 @@ class LogisticMap:
     """
 
     def __init__(
-            self,
-            r: float,
-            X0: typing.List[float] = [],
-            length: int = 200,
-            count: int = 100):
+        self, r: float, X0: typing.List[float] = [], length: int = 200, count: int = 100
+    ):
         """
         Parameters
         ----------
@@ -63,12 +65,12 @@ class LogisticMap:
         self._XY = np.array([x, y]).T
 
         # processes generated from the logistic map
-        self._X0 = X0 if len(X0) else [x0  for x0 in np.random.random(count)]
+        self._X0 = X0 if len(X0) else [x0 for x0 in np.random.random(count)]
         self._X = np.array([self._X0])
-        self._next(steps=length-1)
+        self._next(steps=length - 1)
 
     def __str__(self):
-        return 'LogisticMap(r={:.5f}, x0={:.5f})'.format(self._r, self._x0)
+        return "LogisticMap(r={:.5f}, x0={:.5f})".format(self._r, self._x0)
 
     def __repr__(self):
         return self.__str__()
@@ -89,7 +91,7 @@ class LogisticMap:
         y = logistic_map(r, x)
         self._XY = np.array([x, y]).T
         self._reset()
-        self._next(steps=length-1)
+        self._next(steps=length - 1)
 
     @property
     def X0(self):
@@ -117,15 +119,14 @@ class LogisticMap:
     def _next(self, steps: int = 1):
         for _ in range(steps):
             self._X = np.append(
-                self._X,
-                np.atleast_2d(logistic_map(self._r, self._X[-1,:])),
-                axis=0)
+                self._X, np.atleast_2d(logistic_map(self._r, self._X[-1, :])), axis=0
+            )
 
     def scramble(self):
         """Regenerates random initial values, and reconstructs the processes
 
         """
 
-        self.X0 = [x0  for x0 in np.random.random(self._count)]
+        self.X0 = [x0 for x0 in np.random.random(self._count)]
         self._reset()
-        self._next(steps=self._length-1)
+        self._next(steps=self._length - 1)
