@@ -45,6 +45,7 @@ jobs:
         
     - name: Test with pytest
       run: |
-        pytest --cov=chaos test/
-        # pytest --cov=chaos --cov-report=html --doctest-modules
+        # without argument/options, it should read from pytest.ini
+        pytest
+        # pytest --cov=chaos tests/
         
