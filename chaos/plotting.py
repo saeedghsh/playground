@@ -58,7 +58,7 @@ class LogisticMapFigure:
         plt.show()
 
     def _plot_logistic_map(self, axis):
-        self._lm_curve_plot = axis.plot(
+        self._curve_plot = axis.plot(
             self._lm.XY[:, 0], self._lm.XY[:, 1], label="logistic map"
         )[0]
         axis.plot([0, 1], [0, 1], "k", label="linear")
@@ -69,12 +69,12 @@ class LogisticMapFigure:
         axis.legend(loc="upper left", fancybox=True, shadow=False, framealpha=0.6)
 
     def _plot_cobweb(self, axis):
-        self._lm_cobweb = axis.plot(
+        self._cobweb_plot = axis.plot(
             self._lm.cobweb[:, 0], self._lm.cobweb[:, 1], "r", alpha=0.7, label="cobweb"
         )[0]
 
     def _plot_chaotic_processes(self, axis):
-        self._lm_processes_plot = axis.plot(self._lm.X, "k", linewidth=0.3, alpha=0.6)
+        self._processes_plot = axis.plot(self._lm.X, "k", linewidth=0.3, alpha=0.6)
         title = "{:d} chaotic processes (with random initial points) generated from the logistic map"
         axis.set_title(title.format(self._lm.X.shape[1]))
         axis.set_ylim([0, 1])
@@ -83,7 +83,7 @@ class LogisticMapFigure:
 
     def _plot_frequency_spectrum(self, axis):
         X = fftpack.fft(self._lm.X[:, 0])
-        self._lm_spectrum_plot = axis.plot(X, "k", linewidth=0.3, alpha=0.6)[0]
+        self._spectrum_plot = axis.plot(X, "k", linewidth=0.3, alpha=0.6)[0]
         axis.set_title("frequency spectrum")
         axis.set_ylim([X.real.min() - 1, X.real.max() + 1])
         axis.set_xlabel("f")
@@ -99,21 +99,16 @@ class LogisticMapFigure:
 
         self._lm.r = self._r_slider.val
 
-        # if self._lm.r > 3:
-        #     self._plot_cobweb(self._axes[0])
+        self._curve_plot.set_ydata(self._lm.XY[:, 1])
 
-        self._lm_curve_plot.set_ydata(self._lm.XY[:, 1])
+        self._cobweb_plot.set_data(self._lm.cobweb[:, 0], self._lm.cobweb[:, 1])
 
-        self._lm_cobweb.set_xdata(self._lm.cobweb[:, 0])
-        self._lm_cobweb.set_ydata(self._lm.cobweb[:, 1])
-
-        for i, p in enumerate(self._lm_processes_plot):
+        for i, p in enumerate(self._processes_plot):
             p.set_ydata(self._lm.X[:, i])
-        p.axes.set_ylim([0, self._lm.X.max()])
 
         X = fftpack.fft(self._lm.X[:, 0])
-        self._lm_spectrum_plot.set_ydata(X)
-        self._lm_spectrum_plot.axes.set_ylim([X.real.min() - 1, X.real.max() + 1])
+        self._spectrum_plot.set_ydata(X)
+        self._spectrum_plot.axes.set_ylim([X.real.min() - 1, X.real.max() + 1])
 
         self._fig.canvas.draw_idle()
 
