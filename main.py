@@ -6,7 +6,7 @@ from __future__ import print_function
 import argparse
 
 from chaos.logisticmap import LogisticMap
-from chaos.plotting import SlidingFigure
+from chaos.plotting import LogisticMapFigure
 
 
 def main_logisticmap(args: argparse.Namespace):
@@ -21,7 +21,7 @@ def main_logisticmap(args: argparse.Namespace):
     """
 
     LM = LogisticMap(r=0.0, length=args.length, count=args.count)
-    _ = SlidingFigure(LM)
+    _ = LogisticMapFigure(LM)
 
 
 if __name__ == "__main__":
