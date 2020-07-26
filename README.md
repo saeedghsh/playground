@@ -17,7 +17,6 @@ for help:
 ```bash
 python main.py -h
 python main.py logisticmap -h
-
 ```
 
 ## laundry list
@@ -25,11 +24,12 @@ python main.py logisticmap -h
 
 * [x] gererate chaotic processes via logistic maps
   - [ ] reproduce all the plots from [here](https://en.wikipedia.org/wiki/Logistic_map)
-    + [ ] frequency spectrum
-    + [ ] [Bifurcation diagram](https://en.wikipedia.org/wiki/Bifurcation_diagram)
+    + [x] frequency spectrum
     + [ ] [cobweb plot](https://en.wikipedia.org/wiki/Cobweb_plot)
+    + [ ] [Bifurcation diagram](https://en.wikipedia.org/wiki/Bifurcation_diagram)
+
   - [ ] use [Tent map](https://en.wikipedia.org/wiki/Tent_map) instead of "Logistic map"
-  
+
 * [ ] the 2D plot from the derivative of the process: <img src="https://render.githubusercontent.com/render/math?math=(x,y)=(dX_{t}, dX_{t %2B 1})">
 
 * [ ] List other chaotic systems
