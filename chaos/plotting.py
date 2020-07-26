@@ -12,7 +12,7 @@ from scipy import fftpack
 from . import logisticmap
 
 
-class SlidingFigure:
+class LogisticMapFigure:
     """A plotting object
 
     Attributes
