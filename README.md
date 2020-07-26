@@ -11,14 +11,18 @@ Python implementation and exprementation with few simplistic chaotic systems.
 ## Usage
 ```bash
 pip install -r requirements.txt
-python main.py --length 100 --count 500
+python main.py logisticmap --length 100 --count 500
 ```
 for help:
 ```bash
 python main.py -h
+python main.py logisticmap -h
+
 ```
 
 ## laundry list
+* [x] separate parsers for different type of systems (with subparser)
+
 * [x] gererate chaotic processes via logistic maps
   - [ ] reproduce all the plots from [here](https://en.wikipedia.org/wiki/Logistic_map)
     + [ ] frequency spectrum
