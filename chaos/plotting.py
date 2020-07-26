@@ -67,6 +67,7 @@ class SlidingFigure:
         self._lm_processes_plot = axis.plot(self._lm.X, "k", linewidth=0.3, alpha=0.6)
         title = "{:d} chaotic processes (with random initial points) generated from the logistic map"
         axis.set_title(title.format(self._lm.X.shape[1]))
+        axis.set_ylim([0, 1])
         axis.set_xlabel("t")
         axis.set_ylabel("x[t]")
 
