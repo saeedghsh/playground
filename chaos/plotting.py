@@ -46,6 +46,7 @@ class LogisticMapFigure:
             ),  # frequency spectrum
         ]
         self._plot_logistic_map(self._axes[0])
+        self._plot_cobweb(self._axes[0])
         self._plot_chaotic_processes(self._axes[2])
         self._plot_frequency_spectrum(self._axes[3])
         self._r_slider = matplotlib.widgets.Slider(
@@ -66,6 +67,11 @@ class LogisticMapFigure:
         axis.set_ylabel("x[t]")
         axis.axis("equal")
         axis.legend(loc="upper left", fancybox=True, shadow=False, framealpha=0.6)
+
+    def _plot_cobweb(self, axis):
+        self._lm_cobweb = axis.plot(
+            self._lm.cobweb[:, 0], self._lm.cobweb[:, 1], "r", alpha=0.7, label="cobweb"
+        )[0]
 
     def _plot_chaotic_processes(self, axis):
         self._lm_processes_plot = axis.plot(self._lm.X, "k", linewidth=0.3, alpha=0.6)
@@ -93,7 +99,13 @@ class LogisticMapFigure:
 
         self._lm.r = self._r_slider.val
 
+        # if self._lm.r > 3:
+        #     self._plot_cobweb(self._axes[0])
+
         self._lm_curve_plot.set_ydata(self._lm.XY[:, 1])
+
+        self._lm_cobweb.set_xdata(self._lm.cobweb[:, 0])
+        self._lm_cobweb.set_ydata(self._lm.cobweb[:, 1])
 
         for i, p in enumerate(self._lm_processes_plot):
             p.set_ydata(self._lm.X[:, i])

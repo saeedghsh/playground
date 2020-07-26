@@ -25,7 +25,7 @@ python main.py logisticmap -h
 * [x] gererate chaotic processes via logistic maps
   - [ ] reproduce all the plots from [here](https://en.wikipedia.org/wiki/Logistic_map)
     + [x] frequency spectrum
-    + [ ] [cobweb plot](https://en.wikipedia.org/wiki/Cobweb_plot)
+    + [x] [cobweb plot](https://en.wikipedia.org/wiki/Cobweb_plot)
     + [ ] [Bifurcation diagram](https://en.wikipedia.org/wiki/Bifurcation_diagram)
 
   - [ ] use [Tent map](https://en.wikipedia.org/wiki/Tent_map) instead of "Logistic map"
