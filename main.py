@@ -26,23 +26,24 @@ def main(length: int, count: int):
 
 if __name__ == "__main__":
     PARSER = argparse.ArgumentParser(
-        description="number and temopral length of processes"
+        description="number and temopral length of processes",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     PARSER.add_argument(
         "--count",
         dest="count",
         type=int,  # nargs=1,
         action="store",
-        default=1000,
-        help="Number of [chaotic] processes",
+        default=100,
+        help="number of the chaotic processes",
     )
     PARSER.add_argument(
         "--length",
         dest="length",
         type=int,  # nargs=1,
         action="store",
-        default=50,
-        help="length (time) of [chaotic] processes",
+        default=60,
+        help="[temporal] length of the chaotic processes",
     )
     ARGS = PARSER.parse_args()
 

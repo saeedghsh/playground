@@ -12,21 +12,27 @@ Python implementation and exprementation with few simplistic chaotic systems.
 ```bash
 pip install -r requirements.txt
 python main.py --length 100 --count 500
-python main.py -h # for help
 ```
-where:
-  * `--count` (default: 1000) is the number of processess plotted at the same time.
-  * `--length` (default: 50) is the maximum time.
+for help:
+```bash
+python main.py -h
+```
 
 ## laundry list
 * [x] gererate chaotic processes via logistic maps
   - [ ] reproduce all the plots from [here](https://en.wikipedia.org/wiki/Logistic_map)
+    + [ ] frequency spectrum
+    + [ ] [Bifurcation diagram](https://en.wikipedia.org/wiki/Bifurcation_diagram)
+    + [ ] [cobweb plot](https://en.wikipedia.org/wiki/Cobweb_plot)
   - [ ] use [Tent map](https://en.wikipedia.org/wiki/Tent_map) instead of "Logistic map"
+  
 * [ ] the 2D plot from the derivative of the process: <img src="https://render.githubusercontent.com/render/math?math=(x,y)=(dX_{t}, dX_{t %2B 1})">
 
-* [ ] double-rod pendulum
-* [ ] Lorenz attractor 
-* [ ] Mobility VS time of blue/red cars from [here](https://en.wikipedia.org/wiki/Chaos_theory)
+* [ ] List other chaotic systems
+  - [ ] [Arnold tongue](https://en.wikipedia.org/wiki/Arnold_tongue)
+  - [ ] double-rod pendulum
+  - [ ] Lorenz attractor 
+  - [ ] Mobility VS time of blue/red cars from [here](https://en.wikipedia.org/wiki/Chaos_theory)
 
 
 ## License
