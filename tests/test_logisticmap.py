@@ -63,6 +63,10 @@ class TestLogisticMap:
         lm = initiate_logistic_map()
         assert (lm.XY == np.array([x, y]).T).all()
 
+    def test_get_cobweb(self):
+        lm = initiate_logistic_map()
+        assert lm.cobweb.shape == (LENGTH, 2)
+
     def test__reset(self):
         lm = initiate_logistic_map()
         assert lm.X.shape == (6, 3)
