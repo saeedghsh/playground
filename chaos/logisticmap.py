@@ -70,7 +70,10 @@ class LogisticMap:
         self._next(steps=length - 1)
 
     def __str__(self):
-        return "LogisticMap(r={:.5f}, x0={:.5f})".format(self._r, self._x0)
+        s = "LogisticMap(r={:.2f}, x0=["
+        s += ", ".join(["{:.2f}"] * len(self._X0))
+        s += "])"
+        return s.format(self._r, *(self._X0))
 
     def __repr__(self):
         return self.__str__()
