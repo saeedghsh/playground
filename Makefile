@@ -1,11 +1,18 @@
 SHELL := /bin/bash
 
+
 all: \
 	clean \
 	formatter \
 	lint-flake8 \
 	test \
 	verify-clean-git-stage
+
+.PHONY: tidy-up
+tidy-up: \
+	clean \
+	formatter \
+	lint-flake8 
 
 .PHONY: clean
 clean: \
