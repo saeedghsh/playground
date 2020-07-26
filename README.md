@@ -12,6 +12,7 @@ Python implementation and exprementation with few simplistic chaotic systems.
 ```bash
 pip install -r requirements.txt
 python main.py --length 100 --count 500
+python main.py -h # for help
 ```
 where:
   * `--count` (default: 1000) is the number of processess plotted at the same time.
