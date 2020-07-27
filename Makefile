@@ -73,5 +73,4 @@ run:
 .PHONY: verify-clean-git-stage
 verify-clean-git-stage:
 	@echo -e "***** verify cleaniness of git staging area"
-	@[ -n "$(git status --porcelain)" ] || \
-	{ echo -e "ERROR: uncommited changes in commit area, either commit or ignore"; git status --porcelain; exit 1; }
+	@if [ -n "$$(git status --porcelain)" ]; then git status --porcelain; exit 1; fi
