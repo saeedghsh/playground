@@ -85,4 +85,4 @@ class TestLogisticMap:
         X = lm.X.copy()
         lm.scramble()
         assert X.shape == lm.X.shape == (6, 3)
-        assert (lm.X != X).all()
+        assert (lm.X != X).any()
