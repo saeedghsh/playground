@@ -152,9 +152,7 @@ class LogisticMap:
         self._cobweb = cobweb(self._r, self._X0[0], self._length)
 
     def scramble(self):
-        """Regenerates random initial values, and reconstructs the processes
-
-        """
+        """Regenerates random initial values, and reconstructs the processes"""
 
         self.X0 = [x0 for x0 in np.random.random(self._count)]
         self._set_coweb()
