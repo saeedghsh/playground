@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" Generation of chaotic processes via logistic map"""
+"""Main script to launch examples from."""
 
 from __future__ import print_function
 
@@ -9,7 +9,7 @@ from chaos.logisticmap import LogisticMap
 from chaos.plotting import LogisticMapFigure
 
 
-def main_logisticmap(args: argparse.Namespace):
+def main_logisticmap(args: argparse.Namespace) -> None:
     """instantiating the LogisticMap and the plotting object
 
     Parameters
@@ -20,20 +20,21 @@ def main_logisticmap(args: argparse.Namespace):
         The numebr of processes
     """
 
-    LM = LogisticMap(r=0.0, length=args.length, count=args.count)
-    _ = LogisticMapFigure(LM)
+    logisticmap = LogisticMap(r=0.0, length=args.length, count=args.count)
+    _ = LogisticMapFigure(logisticmap)
 
 
-if __name__ == "__main__":
-    PARSER = argparse.ArgumentParser(
-        description="number and temopral length of processes",
+def parse_argument() -> argparse.Namespace:
+    """Main Parser"""
+    parser = argparse.ArgumentParser(
+        description="Main Parser",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    SUBPARSERS = PARSER.add_subparsers()
+    subparsers = parser.add_subparsers()
 
-    LOGISTICMAP_PARSER = SUBPARSERS.add_parser("logisticmap")
-    LOGISTICMAP_PARSER.set_defaults(func=main_logisticmap)
-    LOGISTICMAP_PARSER.add_argument(
+    logisticmap_parser = subparsers.add_parser("logisticmap")
+    logisticmap_parser.set_defaults(func=main_logisticmap)
+    logisticmap_parser.add_argument(
         "--count",
         dest="count",
         type=int,  # nargs=1,
@@ -41,7 +42,7 @@ if __name__ == "__main__":
         default=100,
         help="number of the chaotic processes",
     )
-    LOGISTICMAP_PARSER.add_argument(
+    logisticmap_parser.add_argument(
         "--length",
         dest="length",
         type=int,  # nargs=1,
@@ -50,5 +51,14 @@ if __name__ == "__main__":
         help="[temporal] length of the chaotic processes",
     )
 
-    ARGS = PARSER.parse_args()
-    ARGS.func(ARGS)
+    arguments = parser.parse_args()
+    return arguments
+
+
+def main() -> None:
+    arguments = parse_argument()
+    arguments.func(arguments)
+
+
+if __name__ == "__main__":
+    main()
