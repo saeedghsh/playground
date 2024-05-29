@@ -4,6 +4,8 @@ import sys
 from typing import Sequence
 import argparse
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover
@@ -26,15 +28,44 @@ def _generate_sequence(initial_number: int) -> Sequence[int]:
     return sequence
 
 
-def _plot_sequences_as_timeseries(sequences: Sequence[Sequence[int]]):
-    plt.figure(figsize=(20, 15))
-    max_length = max(len(s) for s in sequences)
-    for y in sequences:
+def _plot_sequences_as_timeseries_animated(
+    sequences: Sequence[Sequence[int]], time_delay: int = 200
+):
+    def init():
+        ax.set_xlim(0, max(len(seq) for seq in sequences) - 1)
+        ax.set_ylim(0, max(max(seq) for seq in sequences))
+        return lines
+
+    def animate(i):
+        # fade out previous sequences
+        for j in range(i):
+            lines[j].set_alpha(np.exp(-0.1 * (i - j)))
+        # draw a new sequence
+        y = sequences[i]
         x = list(range(max_length - len(y), max_length))
-        plt.plot(x, y, marker="o", linestyle="-")
+        lines[i].set_data(x, y)
+        lines[i].set_alpha(1)
+        plt.title(f"Collatz Sequences - start value = {y[0]}")
+        return lines
+
+    max_length = max(len(s) for s in sequences)
+    fig, ax = plt.subplots(figsize=(10, 6))
+    lines = [ax.plot([], [], marker="o", linestyle="-", alpha=0)[0] for _ in sequences]
+
+    _ = animation.FuncAnimation(
+        fig,
+        animate,
+        frames=len(sequences),
+        init_func=init,
+        interval=time_delay,
+        blit=True,
+        repeat=False,
+    )
+
+    ax.set_xlabel("Step")
+    ax.set_ylabel("Value (in logarithmic scale)")
+    ax.set_yscale("log")
     plt.title("Collatz Sequences")
-    plt.xlabel("Step")
-    plt.ylabel("Value")
     plt.grid(True)
     plt.tight_layout()
     plt.show()
@@ -47,7 +78,7 @@ def _main(argv: Sequence[str]):
         raise ValueError("end must be greater than or equal to start")
     for n in range(args.start, args.end + 1):
         sequences.append(_generate_sequence(n))
-    _plot_sequences_as_timeseries(sequences)
+    _plot_sequences_as_timeseries_animated(sequences, time_delay=10)
 
 
 if __name__ == "__main__":
