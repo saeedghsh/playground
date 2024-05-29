@@ -27,6 +27,8 @@ def plot_sequences_as_timeseries_animated(sequences: Dict[int, list], time_delay
         lines[i].set_alpha(1)
         # mark the position of the initial value on the y-axis
         marker.set_data([0], [y[0]])
+        # plt.savefig(f"collatz_conjecture/images/frame_{i:03d}.png")
+        # $ convert -delay 5 -loop 0 collatz_conjecture/images/*.png collatz_sequence.gif
         return lines + [marker]
 
     max_length = max(len(s) for s in sequences.values())
