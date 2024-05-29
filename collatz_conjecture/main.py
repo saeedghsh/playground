@@ -1,39 +1,13 @@
 """Collatz Conjecture"""
 
-from functools import lru_cache, wraps
+from functools import lru_cache
 import sys
 from typing import Sequence
 import argparse
-import time
-import psutil
+
 
 from plotter import plot_sequences_as_timeseries_animated
-
-
-def memory_usage_decorator(threshold: int):
-    """A decorator to detect over-usage of a function to prevent crash.
-    threshold is in MB."""
-
-    def memory_usage_mb(process: psutil.Process) -> int:
-        """Return memory usage in MB"""
-        memory_info = process.memory_info()
-        return memory_info.rss // 1024**2
-
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            process = psutil.Process()
-            result = func(*args, **kwargs)
-            memory_usage = memory_usage_mb(process)
-            if memory_usage > threshold:
-                print(f"Memory usage exceeded {threshold} MB. Exiting to prevent crash.")
-                sys.exit(1)
-
-            return result
-
-        return wrapper
-
-    return decorator
+from utils import memory_usage_guard
 
 
 @lru_cache(maxsize=None)
@@ -57,7 +31,7 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
     return parser.parse_args(argv)
 
 
-@memory_usage_decorator(threshold=500)
+@memory_usage_guard(threshold=500)
 def _main(argv: Sequence[str]):
     args = _parse_arguments(argv)
     sequences = []
