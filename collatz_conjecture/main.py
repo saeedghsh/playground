@@ -1,20 +1,42 @@
 """Collatz Conjecture"""
 
+from functools import lru_cache, wraps
 import sys
 from typing import Sequence
 import argparse
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-import numpy as np
+import time
+import psutil
+
+from plotter import plot_sequences_as_timeseries_animated
 
 
-def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover
-    parser = argparse.ArgumentParser(description="Hornet Field entry point")
-    parser.add_argument("-s", "--start", type=int, default=1)
-    parser.add_argument("-e", "--end", type=int, default=100)
-    return parser.parse_args(argv)
+def memory_usage_decorator(threshold: int):
+    """A decorator to detect over-usage of a function to prevent crash.
+    threshold is in MB."""
+
+    def memory_usage_mb(process: psutil.Process) -> int:
+        """Return memory usage in MB"""
+        memory_info = process.memory_info()
+        return memory_info.rss // 1024**2
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            process = psutil.Process()
+            result = func(*args, **kwargs)
+            memory_usage = memory_usage_mb(process)
+            if memory_usage > threshold:
+                print(f"Memory usage exceeded {threshold} MB. Exiting to prevent crash.")
+                sys.exit(1)
+
+            return result
+
+        return wrapper
+
+    return decorator
 
 
+@lru_cache(maxsize=None)
 def _collatz_rule(n: int) -> int:
     return n * 3 + 1 if n % 2 == 1 else n // 2
 
@@ -28,49 +50,14 @@ def _generate_sequence(initial_number: int) -> Sequence[int]:
     return sequence
 
 
-def _plot_sequences_as_timeseries_animated(
-    sequences: Sequence[Sequence[int]], time_delay: int = 200
-):
-    def init():
-        ax.set_xlim(0, max(len(seq) for seq in sequences) - 1)
-        ax.set_ylim(0, max(max(seq) for seq in sequences))
-        return lines
-
-    def animate(i):
-        # fade out previous sequences
-        for j in range(i):
-            lines[j].set_alpha(np.exp(-0.1 * (i - j)))
-        # draw a new sequence
-        y = sequences[i]
-        x = list(range(max_length - len(y), max_length))
-        lines[i].set_data(x, y)
-        lines[i].set_alpha(1)
-        plt.title(f"Collatz Sequences - start value = {y[0]}")
-        return lines
-
-    max_length = max(len(s) for s in sequences)
-    fig, ax = plt.subplots(figsize=(10, 6))
-    lines = [ax.plot([], [], marker="o", linestyle="-", alpha=0)[0] for _ in sequences]
-
-    _ = animation.FuncAnimation(
-        fig,
-        animate,
-        frames=len(sequences),
-        init_func=init,
-        interval=time_delay,
-        blit=True,
-        repeat=False,
-    )
-
-    ax.set_xlabel("Step")
-    ax.set_ylabel("Value (in logarithmic scale)")
-    ax.set_yscale("log")
-    plt.title("Collatz Sequences")
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover
+    parser = argparse.ArgumentParser(description="Collatz Conjecture")
+    parser.add_argument("-s", "--start", type=int, default=1)
+    parser.add_argument("-e", "--end", type=int, default=100)
+    return parser.parse_args(argv)
 
 
+@memory_usage_decorator(threshold=500)
 def _main(argv: Sequence[str]):
     args = _parse_arguments(argv)
     sequences = []
@@ -78,7 +65,7 @@ def _main(argv: Sequence[str]):
         raise ValueError("end must be greater than or equal to start")
     for n in range(args.start, args.end + 1):
         sequences.append(_generate_sequence(n))
-    _plot_sequences_as_timeseries_animated(sequences, time_delay=10)
+    plot_sequences_as_timeseries_animated(sequences, time_delay=10)
 
 
 if __name__ == "__main__":
