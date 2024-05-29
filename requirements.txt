@@ -1,0 +1,10 @@
+pylint
+pytest
+pytest-mock
+pytest-cov
+black
+isort
+mypy
+psutil
+numpy
+matplotlib
