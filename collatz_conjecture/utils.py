@@ -5,7 +5,7 @@ from functools import wraps
 import psutil
 
 
-def memory_usage_guard(threshold: int):
+def memory_guard_decorator(threshold: int):
     """A decorator to detect over-usage of a function to prevent crash.
     threshold is in MB."""
 
