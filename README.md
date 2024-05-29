@@ -1,5 +1,17 @@
 # Playground
 
+
+## Code quality checks
+```bash
+$ black . --check
+$ isort . --check-only
+$ mypy . --explicit-package-bases
+$ pylint $(git ls-files '*.py')
+$ xvfb-run --auto-servernum pytest
+$ xvfb-run --auto-servernum pytest --cov=.
+$ xvfb-run --auto-servernum pytest --cov=. --cov-report html; firefox htmlcov/index.html
+```
+
 # License
 ```
 Copyright (C) Saeed Gholami Shahbandi
