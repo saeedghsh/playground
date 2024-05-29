@@ -1,5 +1,6 @@
 """Some utils"""
 
+import sys
 from functools import wraps
 import psutil
 
