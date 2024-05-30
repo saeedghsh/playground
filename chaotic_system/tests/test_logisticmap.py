@@ -1,5 +1,8 @@
 """Test for the LogisticMap class"""
 
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+
 import numpy as np
 
 # to be able to import `chaos.logisticmap`, it is important that this
