@@ -69,9 +69,7 @@ class CoordinateFrame:
         origin = numpy.tile(origin, (3, 1))
         return origin, axes
 
-    def draw(
-        self, figure: mayavi.core.scene.Scene
-    ) -> mayavi.modules.vectors.Vectors:
+    def draw(self, figure: mayavi.core.scene.Scene) -> mayavi.modules.vectors.Vectors:
         """Draw a coordinate frame (XYZ axes) in the figure
 
         draws the basis of a coordinate frame (x, y, and z axes)
@@ -93,9 +91,7 @@ class CoordinateFrame:
             **args,
         )
         self._coordinate_frame.glyph.color_mode = "color_by_scalar"
-        self._coordinate_frame.module_manager.scalar_lut_manager.lut.table = (
-            self._colors
-        )
+        self._coordinate_frame.module_manager.scalar_lut_manager.lut.table = self._colors
 
     def update(self, pose: numpy.ndarray):
         """Update a prviously drawn coordinate frame

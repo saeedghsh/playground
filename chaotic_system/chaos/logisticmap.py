@@ -4,7 +4,6 @@ Currently it only contains one object, namely "LogisticMap"
 
 """
 
-
 import typing
 
 import numpy as np
@@ -55,9 +54,7 @@ class LogisticMap:
         processes
     """
 
-    def __init__(
-        self, r: float, X0: typing.List[float] = [], length: int = 200, count: int = 100
-    ):
+    def __init__(self, r: float, X0: typing.List[float] = [], length: int = 200, count: int = 100):
         """
         Parameters
         ----------

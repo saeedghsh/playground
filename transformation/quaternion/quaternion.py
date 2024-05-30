@@ -8,7 +8,7 @@ def normalize_quaternion(quaternion):
     norm = sqrt(sum([q**2 for q in quaternion]))
     if norm == 0:
         return quaternion
-    return [q/norm for q in quaternion]
+    return [q / norm for q in quaternion]
 
 
 def quat_conjugate(quaternion):
@@ -69,11 +69,13 @@ def quat_to_matrix(quaternion):
         numpy.ndarray: A 3x3 rotation matrix.
     """
     w, x, y, z = quaternion
-    rotation_matrix = np.array([
-        [1 - 2 * (y**2 + z**2), 2 * (x * y - w * z), 2 * (x * z + w * y)],
-        [2 * (x * y + w * z), 1 - 2 * (x**2 + z**2), 2 * (y * z - w * x)],
-        [2 * (x * z - w * y), 2 * (y * z + w * x), 1 - 2 * (x**2 + y**2)]
-    ])
+    rotation_matrix = np.array(
+        [
+            [1 - 2 * (y**2 + z**2), 2 * (x * y - w * z), 2 * (x * z + w * y)],
+            [2 * (x * y + w * z), 1 - 2 * (x**2 + z**2), 2 * (y * z - w * x)],
+            [2 * (x * z - w * y), 2 * (y * z + w * x), 1 - 2 * (x**2 + y**2)],
+        ]
+    )
     return rotation_matrix
 
 
@@ -127,7 +129,7 @@ def quat_multiply(quaternion1, quaternion2):
         w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
         w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2,
         w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2,
-        w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2
+        w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2,
     ]
     return normalize_quaternion(result)
 
@@ -135,11 +137,10 @@ def quat_multiply(quaternion1, quaternion2):
 def apply_transform(start_position, start_orientation, translation, rotation_quaternion):
     rotation_quaternion = normalize_quaternion(rotation_quaternion)
     end_orientation_quaternion = quat_multiply(
-        rotation_quaternion,
-        quat_multiply(start_orientation, quat_conjugate(rotation_quaternion))
+        rotation_quaternion, quat_multiply(start_orientation, quat_conjugate(rotation_quaternion))
     )
     end_orientation_quaternion = normalize_quaternion(end_orientation_quaternion)
-    end_position = [p+t for p, t in zip(start_position, translation)]
+    end_position = [p + t for p, t in zip(start_position, translation)]
     return end_position, end_orientation_quaternion
 
 
@@ -153,7 +154,7 @@ def quaternion_to_translation(quaternion):
 
 def slerp(q1, q2, t):
     """Spherical Linear Interpolation
-    
+
     The most commonly used method for interpolating rotations with quaternions.
     Slerp ensures a smooth and shortest path interpolation between two quaternions on a unit sphere.
 
@@ -170,41 +171,41 @@ def slerp(q1, q2, t):
     """
     q1 = normalize_quaternion(q1)
     q2 = normalize_quaternion(q2)
-    
+
     q1 = np.array(q1)
     q2 = np.array(q2)
     dot_product = np.dot(q1, q2)
-    
+
     # If the dot product is negative, it means the rotations are not in the same direction.
     # negating one of them (while represent the same end orientation) ensures they represent
     # rotations in the same direction.
     if dot_product < 0.0:
         q1[0] = -q1[0]  # Negate only the first element
         dot_product = -dot_product
-    
+
     if dot_product > 0.995:  # Threshold for linear interpolation
         result = q1 + t * (q2 - q1)
         return normalize_quaternion(result)
-    
+
     angle = np.arccos(dot_product)
     sin_angle = np.sin(angle)
-    
+
     weight1 = np.sin((1 - t) * angle) / sin_angle
     weight2 = np.sin(t * angle) / sin_angle
-    
+
     result = q1 * weight1 + q2 * weight2
     return normalize_quaternion(result)
 
 
-def interpolate_orientation_slerp (q1, q2, steps):
+def interpolate_orientation_slerp(q1, q2, steps):
     """Return a list of orientations from q1 to q2 (inclusive) with interpolated steps in between
 
     steps: the number of intermediate steps.
     The number of returned orientation, including start and end, is steps + 2
     """
     orientations = [q1]
-    for i in range(1, steps+1):
-        step = i / (steps+1.0)
+    for i in range(1, steps + 1):
+        step = i / (steps + 1.0)
         intermediate_orientation = slerp(q1, q2, step)
         orientations.append(intermediate_orientation)
     orientations.append(q2)
@@ -219,8 +220,8 @@ def interpolate_position_linear(p1, p2, steps):
     """
     translation = [p2_ - p1_ for p1_, p2_ in zip(p1, p2)]
     positions = [p1]
-    for i in range(1, steps+1):
-        step = i / (steps+1.0)
+    for i in range(1, steps + 1):
+        step = i / (steps + 1.0)
         intermediate_position = [p + step * t for p, t in zip(p1, translation)]
         positions.append(intermediate_position)
     positions.append(p2)
@@ -242,7 +243,7 @@ def compose_dual_quaternion(translation_vector=None, rotation_quaternion=None):
         tran_q = [0.0, 0.0, 0.0, 0.0]
     else:
         tran_q = [0.0] + translation_as_quaternion(translation_vector)[1:4]
-    
+
     if rotation_quaternion is None:
         rot_q = [1.0, 0.0, 0.0, 0.0]
     else:
@@ -266,20 +267,48 @@ def dual_quaternion_multiply(dq1, dq2):
         Dq1[0] * Dq2[0] - Dq1[1] * Dq2[1] - Dq1[2] * Dq2[2] - Dq1[3] * Dq2[3],
         Dq1[0] * Dq2[1] + Dq1[1] * Dq2[0] + Dq1[2] * Dq2[3] - Dq1[3] * Dq2[2],
         Dq1[0] * Dq2[2] - Dq1[1] * Dq2[3] + Dq1[2] * Dq2[0] + Dq1[3] * Dq2[1],
-        Dq1[0] * Dq2[3] + Dq1[1] * Dq2[2] - Dq1[2] * Dq2[1] + Dq1[3] * Dq2[0]
+        Dq1[0] * Dq2[3] + Dq1[1] * Dq2[2] - Dq1[2] * Dq2[1] + Dq1[3] * Dq2[0],
     ]
     Tq = [
-        Dq1[0] * Tq2[0] + Dq2[0] * Tq1[0] - Dq1[1] * Tq2[1] - Dq2[1] * Tq1[1] - Dq1[2] * Tq2[2] - Dq2[2] * Tq1[2] - Dq1[3] * Tq2[3] - Dq2[3] * Tq1[3],
-        Dq1[0] * Tq2[1] + Dq2[0] * Tq1[1] + Dq1[1] * Tq2[0] + Dq2[1] * Tq1[0] + Dq1[2] * Tq2[3] + Dq2[2] * Tq1[3] - Dq1[3] * Tq2[2] - Dq2[3] * Tq1[2],
-        Dq1[0] * Tq2[2] + Dq2[0] * Tq1[2] - Dq1[1] * Tq2[3] - Dq2[1] * Tq1[3] + Dq1[2] * Tq2[0] + Dq2[2] * Tq1[0] + Dq1[3] * Tq2[1] + Dq2[3] * Tq1[1],
-        Dq1[0] * Tq2[3] + Dq2[0] * Tq1[3] + Dq1[1] * Tq2[2] + Dq2[1] * Tq1[2] - Dq1[2] * Tq2[1] - Dq2[2] * Tq1[1] + Dq1[3] * Tq2[0] + Dq2[3] * Tq1[0]
+        Dq1[0] * Tq2[0]
+        + Dq2[0] * Tq1[0]
+        - Dq1[1] * Tq2[1]
+        - Dq2[1] * Tq1[1]
+        - Dq1[2] * Tq2[2]
+        - Dq2[2] * Tq1[2]
+        - Dq1[3] * Tq2[3]
+        - Dq2[3] * Tq1[3],
+        Dq1[0] * Tq2[1]
+        + Dq2[0] * Tq1[1]
+        + Dq1[1] * Tq2[0]
+        + Dq2[1] * Tq1[0]
+        + Dq1[2] * Tq2[3]
+        + Dq2[2] * Tq1[3]
+        - Dq1[3] * Tq2[2]
+        - Dq2[3] * Tq1[2],
+        Dq1[0] * Tq2[2]
+        + Dq2[0] * Tq1[2]
+        - Dq1[1] * Tq2[3]
+        - Dq2[1] * Tq1[3]
+        + Dq1[2] * Tq2[0]
+        + Dq2[2] * Tq1[0]
+        + Dq1[3] * Tq2[1]
+        + Dq2[3] * Tq1[1],
+        Dq1[0] * Tq2[3]
+        + Dq2[0] * Tq1[3]
+        + Dq1[1] * Tq2[2]
+        + Dq2[1] * Tq1[2]
+        - Dq1[2] * Tq2[1]
+        - Dq2[2] * Tq1[1]
+        + Dq1[3] * Tq2[0]
+        + Dq2[3] * Tq1[0],
     ]
     return [normalize_quaternion(Dq), Tq]
 
 
 def dual_quaternion_interpolation(dq1, dq2, t):
     """Return an interpolation between two dual quaternion
-    
+
     Decomposes the dual quaternion to rotation and translation and interpolate separately"""
     Dq1, Tq1 = dq1
     Dq2, Tq2 = dq2

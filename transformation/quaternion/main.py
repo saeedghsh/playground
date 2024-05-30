@@ -18,6 +18,7 @@ def print_pose(poses):
         print(f"\tPosition (or translation): {position}")
         print(f"\tOrientation (Quaternion): {orientation}")
 
+
 # TODO: write unit test
 
 # Issue/bug:
@@ -51,7 +52,9 @@ if mode == "quaternion":
     poses = [start_pose, end_pose]
 
     if interpolate:
-        orientations = interpolate_orientation_slerp(start_orientation, end_orientation, interpolate_steps)
+        orientations = interpolate_orientation_slerp(
+            start_orientation, end_orientation, interpolate_steps
+        )
         positions = interpolate_position_linear(start_position, end_position, interpolate_steps)
         poses = [[p, o] for p, o in zip(positions, orientations)]
 
@@ -64,9 +67,11 @@ if mode == "dual_quaternion":
     poses = [start_pose, end_pose_]
     if interpolate:
         poses = []
-        for i in range(1, interpolate_steps+1):
-            step = i / (interpolate_steps+1.0)
-            orientation, position = dual_quaternion_interpolation(start_pose_dq, end_pose_dq, interpolate_steps)
+        for i in range(1, interpolate_steps + 1):
+            step = i / (interpolate_steps + 1.0)
+            orientation, position = dual_quaternion_interpolation(
+                start_pose_dq, end_pose_dq, interpolate_steps
+            )
             poses.append([position, orientation])
 
 

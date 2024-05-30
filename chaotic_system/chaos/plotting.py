@@ -5,6 +5,7 @@ SlidingFigure: An object to plot the "logistic map" curve and
     "logistic map"
 
 """
+
 import matplotlib.pyplot as plt
 import matplotlib.widgets
 from scipy import fftpack
@@ -41,9 +42,7 @@ class LogisticMapFigure:
             plt.subplot2grid((9, 4), (0, 0), rowspan=8, colspan=1),  # logistic_map
             plt.subplot2grid((9, 4), (8, 0), rowspan=1, colspan=4),  # slider
             plt.subplot2grid((9, 4), (0, 1), rowspan=4, colspan=3),  # chaotic processes
-            plt.subplot2grid(
-                (9, 4), (4, 1), rowspan=4, colspan=3
-            ),  # frequency spectrum
+            plt.subplot2grid((9, 4), (4, 1), rowspan=4, colspan=3),  # frequency spectrum
         ]
         self._plot_logistic_map(self._axes[0])
         self._plot_cobweb(self._axes[0])
@@ -58,9 +57,7 @@ class LogisticMapFigure:
         plt.show()
 
     def _plot_logistic_map(self, axis):
-        self._curve_plot = axis.plot(
-            self._lm.XY[:, 0], self._lm.XY[:, 1], label="logistic map"
-        )[0]
+        self._curve_plot = axis.plot(self._lm.XY[:, 0], self._lm.XY[:, 1], label="logistic map")[0]
         axis.plot([0, 1], [0, 1], "k", label="linear")
         axis.set_title("logistic map vs. linear")
         axis.set_xlabel("x[t-1]")
@@ -75,7 +72,9 @@ class LogisticMapFigure:
 
     def _plot_chaotic_processes(self, axis):
         self._processes_plot = axis.plot(self._lm.X, "k", linewidth=0.3, alpha=0.6)
-        title = "{:d} chaotic processes (with random initial points) generated from the logistic map"
+        title = (
+            "{:d} chaotic processes (with random initial points) generated from the logistic map"
+        )
         axis.set_title(title.format(self._lm.X.shape[1]))
         axis.set_ylim([0, 1])
         axis.set_xlabel("t")
