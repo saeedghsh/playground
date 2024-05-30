@@ -1,9 +1,14 @@
 """Plotting utils"""
 
 from typing import Dict
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import numpy as np
+import networkx as nx
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib import animation
+
+BACKEND = ["Agg", "TkAgg", "Qt5Agg"][2]
+matplotlib.use(BACKEND)
 
 
 def plot_sequences_as_timeseries_animated(sequences: Dict[int, list], time_delay: int = 200):
@@ -11,7 +16,7 @@ def plot_sequences_as_timeseries_animated(sequences: Dict[int, list], time_delay
 
     def init():
         ax.set_xlim(0, max(len(s) for s in sequences.values()) - 1)
-        ax.set_ylim(0, max(max(s) for s in sequences.values()))
+        ax.set_ylim(1, max(max(s) for s in sequences.values()))
         marker.set_data([], [])
         return lines + [marker]
 
@@ -53,5 +58,38 @@ def plot_sequences_as_timeseries_animated(sequences: Dict[int, list], time_delay
     ax.set_yscale("log")
     plt.title("Collatz Sequences")
     plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_sequences_as_graph(graph: nx.DiGraph):  # pylint: disable=missing-function-docstring
+    layouts = {
+        "spring_layout": nx.spring_layout(graph),
+        "circular_layout": nx.circular_layout(graph),
+        "random_layout": nx.random_layout(graph),
+        "shell_layout": nx.shell_layout(graph),
+        "spectral_layout": nx.spectral_layout(graph),
+        "kamada_kawai_layout": nx.kamada_kawai_layout(graph),
+        "planar_layout": nx.planar_layout(graph),
+        "spiral_layout": nx.spiral_layout(graph),
+    }
+
+    _, axes = plt.subplots(2, 4, figsize=(16, 8))
+    axes = axes.flatten()
+
+    for ax, (layout_name, pos) in zip(axes, layouts.items()):
+        nx.draw(
+            graph,
+            pos,
+            ax=ax,
+            with_labels=True,
+            node_size=100,
+            node_color="skyblue",
+            font_size=5,
+            font_color="black",
+            arrows=True,
+        )
+        ax.set_title(layout_name)
+
     plt.tight_layout()
     plt.show()

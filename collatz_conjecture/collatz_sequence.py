@@ -1,6 +1,7 @@
 """Functions to generate Collatz sequences"""
 
-from typing import Dict, List
+from typing import Dict, List, Optional
+import networkx as nx
 
 
 class CollatzSequences:
@@ -9,18 +10,26 @@ class CollatzSequences:
     # pylint: disable=missing-function-docstring
 
     def __init__(self, start: int, end: int) -> None:
+        if start < 1:
+            raise ValueError("Start must be positive!")
         if not start < end:
-            raise ValueError("End must be greater than or equal to start")
+            raise ValueError("End must be greater than or equal to start!")
+
         self._start = start
         self._end = end
         self._next_cached: Dict[int, int] = {1: 4, 4: 2, 2: 1}
         self._sequences: Dict[int, List[int]] = {}
+        self._graph: Optional[nx.DiGraph] = None
         self._compute_pairs()
         self._compute_sequences()
 
     @property
     def sequences(self) -> Dict[int, list]:
         return self._sequences
+
+    @property
+    def graph(self) -> nx.DiGraph:
+        return self._as_graph()
 
     @staticmethod
     def _next(n: int) -> int:
@@ -53,3 +62,10 @@ class CollatzSequences:
     def _compute_sequences(self):
         for n in range(self._start, self._end):
             self._sequences[n] = self._sequence(n)
+
+    def _as_graph(self) -> nx.DiGraph:
+        if self._graph is None:
+            self._graph = nx.DiGraph()
+            for key, value in self._next_cached.items():
+                self._graph.add_edge(key, value)
+        return self._graph
