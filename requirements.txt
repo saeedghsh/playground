@@ -5,10 +5,3 @@ pytest-cov
 black
 isort
 mypy
-psutil
-numpy
-matplotlib
-networkx
-python3-tk
-PyQt5
-scipy
