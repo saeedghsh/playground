@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """Main script to launch examples from."""
 
-import sys
 import argparse
+import sys
 from typing import Sequence
+
 from chaos.logisticmap import LogisticMap
 from chaos.plotting import LogisticMapFigure
 

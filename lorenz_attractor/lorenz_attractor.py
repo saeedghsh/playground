@@ -3,8 +3,9 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 
-from typing import Sequence
 from dataclasses import dataclass
+from typing import Sequence
+
 import numpy as np
 from scipy.integrate import solve_ivp
 from scipy.integrate._ivp.ivp import OdeResult

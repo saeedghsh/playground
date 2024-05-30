@@ -1,13 +1,13 @@
 from quaternion import (
     apply_transform,
-    normalize_quaternion,
-    euler_to_quat,
-    interpolate_position_linear,
-    interpolate_orientation_slerp,
     compose_dual_quaternion,
     decompose_dual_quaternion_to_pose,
-    dual_quaternion_multiply,
     dual_quaternion_interpolation,
+    dual_quaternion_multiply,
+    euler_to_quat,
+    interpolate_orientation_slerp,
+    interpolate_position_linear,
+    normalize_quaternion,
 )
 from visualization import draw_poses
 

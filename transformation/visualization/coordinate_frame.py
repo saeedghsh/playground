@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 from typing import Tuple
-import numpy
+
 import mayavi.mlab
+import numpy
 
 
 class CoordinateFrame:

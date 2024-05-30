@@ -1,14 +1,12 @@
 """Collatz Conjecture"""
 
+import argparse
 import sys
 from typing import Sequence
-import argparse
-
-from utils import memory_guard_decorator
 
 from collatz_sequence import CollatzSequences
-from plotter import plot_sequences_as_timeseries_animated
-from plotter import plot_sequences_as_graph
+from plotter import plot_sequences_as_graph, plot_sequences_as_timeseries_animated
+from utils import memory_guard_decorator
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover

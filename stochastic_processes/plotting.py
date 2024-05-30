@@ -1,7 +1,7 @@
 # pylint: disable=missing-module-docstring
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.widgets
+import numpy as np
 
 
 class SlidingFigure:

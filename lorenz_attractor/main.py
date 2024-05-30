@@ -1,11 +1,12 @@
 """Lorenz Attractor"""
 
+import argparse
 import sys
 from typing import Sequence
-import argparse
 
-from lorenz_attractor import LorenzSystem, LorenzParameters, TimeLine
 from plotter import plot_lorenz_attractor
+
+from lorenz_attractor import LorenzParameters, LorenzSystem, TimeLine
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover

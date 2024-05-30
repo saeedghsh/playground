@@ -1,6 +1,7 @@
 """Functions to generate Collatz sequences"""
 
 from typing import Dict, List, Optional
+
 import networkx as nx
 
 

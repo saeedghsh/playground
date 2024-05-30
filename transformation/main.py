@@ -2,7 +2,9 @@
 """A playground for conversion and visulization of transformations"""
 
 from __future__ import print_function
+
 import argparse
+
 from visualization.coordinate_frame import CoordinateFrame
 from visualization.visulizer import Visualizer
 

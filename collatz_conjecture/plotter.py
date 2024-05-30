@@ -1,10 +1,11 @@
 """Plotting utils"""
 
 from typing import Dict
-import numpy as np
-import networkx as nx
+
 import matplotlib
 import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 from matplotlib import animation
 
 BACKEND = ["Agg", "TkAgg", "Qt5Agg"][2]
