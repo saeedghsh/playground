@@ -62,6 +62,15 @@ def plot_sequences_as_timeseries_animated(sequences: Dict[int, list], time_delay
     plt.show()
 
 
+def _vertical_layout(graph: nx.Graph) -> dict:
+    pos = {}
+    sorted_nodes = sorted(graph.nodes())
+    for i, node in enumerate(sorted_nodes):
+        # (x, y) coordinates; all x-coordinates are 0, y-coordinates are negative index
+        pos[node] = (0, -i)
+    return pos
+
+
 def plot_sequences_as_graph(graph: nx.DiGraph):  # pylint: disable=missing-function-docstring
     layouts = {
         "spring_layout": nx.spring_layout(graph),
@@ -72,9 +81,10 @@ def plot_sequences_as_graph(graph: nx.DiGraph):  # pylint: disable=missing-funct
         "kamada_kawai_layout": nx.kamada_kawai_layout(graph),
         "planar_layout": nx.planar_layout(graph),
         "spiral_layout": nx.spiral_layout(graph),
+        "vertical_layout": _vertical_layout(graph),
     }
 
-    _, axes = plt.subplots(2, 4, figsize=(16, 8))
+    _, axes = plt.subplots(3, 3, figsize=(16, 8))
     axes = axes.flatten()
 
     for ax, (layout_name, pos) in zip(axes, layouts.items()):
