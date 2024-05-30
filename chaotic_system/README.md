@@ -23,7 +23,7 @@ $ pip install pylint # pyreverse is now part of pylint
 $ cd ~/code/ChaoticSystems
 $ pyreverse -o svg -p chaos chaos/*.py
 $ pyreverse -o svg -p chaoticSystems main.py
-$ pyreverse -o svg -p testt ests/*.py
+$ pyreverse -o svg -p tests/*.py
 # -a N, -A    depth of research for ancestors
 # -s N, -S    depth of research for associated classes
 # -A, -S      all ancestors, resp. all associated
