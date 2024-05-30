@@ -15,7 +15,7 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
     parser = argparse.ArgumentParser(description="Collatz Conjecture")
     parser.add_argument("-s", "--start", type=int, default=1)
     parser.add_argument("-e", "--end", type=int, default=100)
-    parser.add_argument("-p", "--plot", choices=["timeseries", "graph"], default="as_timeseries")
+    parser.add_argument("-p", "--plot", choices=["timeseries", "graph"], default="timeseries")
     return parser.parse_args(argv)
 
 
