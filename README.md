@@ -12,6 +12,13 @@ $ xvfb-run --auto-servernum pytest --cov=.
 $ xvfb-run --auto-servernum pytest --cov=. --cov-report html; firefox htmlcov/index.html
 ```
 
+## To play with
+* [Ackermann steering geometry](https://en.m.wikipedia.org/wiki/Ackermann_steering_geometry)
+* constraint programming:
+  * https://en.wikipedia.org/wiki/Constraint_programming
+  * https://mareknarozniak.com/2020/06/22/constraint-programming/
+* 
+
 # License
 ```
 Copyright (C) Saeed Gholami Shahbandi
