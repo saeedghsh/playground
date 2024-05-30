@@ -4,28 +4,52 @@
 # pylint: disable=missing-function-docstring
 
 from typing import Sequence
+from dataclasses import dataclass
 import numpy as np
 from scipy.integrate import solve_ivp
 from scipy.integrate._ivp.ivp import OdeResult
 
 
+class TimeLine:
+    def __init__(self, start: int, end: int, count: int):
+        self._start = start
+        self._end = end
+        self._times = np.linspace(start, end, count)
+
+    @property
+    def times(self) -> np.ndarray:
+        return self._times
+
+    @property
+    def start(self) -> int:
+        return self._start
+
+    @property
+    def end(self) -> int:
+        return self._end
+
+
+@dataclass
+class LorenzParameters:
+    sigma: float
+    rho: float
+    beta: float
+
+
 class LorenzSystem:
     def __init__(
         self,
-        time_start: int,
-        time_end: int,
-        time_points_count: int,
+        time_line: TimeLine,
+        parameters: LorenzParameters,
         initial_points: Sequence[float],
-        sigma: float,
-        rho: float,
-        beta: float,
     ):
-        self._time_points = np.linspace(time_start, time_end, time_points_count)
+        self._time_line = time_line
+        self._parameters = parameters
         self._solution: OdeResult = solve_ivp(
             self.lorenz_system,
-            (time_start, time_end),
+            (time_line.start, time_line.end),
             initial_points,
-            args=(sigma, rho, beta),
+            args=(parameters.sigma, parameters.rho, parameters.beta),
             dense_output=True,
         )
 
@@ -40,4 +64,4 @@ class LorenzSystem:
 
     def solve(self) -> np.ndarray:
         """Solve for the actual points on the attractor"""
-        return self._solution.sol(self._time_points)
+        return self._solution.sol(self._time_line.times)

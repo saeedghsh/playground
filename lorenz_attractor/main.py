@@ -1,13 +1,11 @@
 """Lorenz Attractor"""
 
-# pylint: disable=missing-class-docstring
-# pylint: disable=missing-function-docstring
 import sys
 from typing import Sequence
 import argparse
 
-from lorenz_attractor import LorenzSystem
-from plotting import plot_lorenz_attractor
+from lorenz_attractor import LorenzSystem, LorenzParameters, TimeLine
+from plotter import plot_lorenz_attractor
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover
@@ -25,13 +23,9 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
 def _main(argv: Sequence[str]):
     args = _parse_arguments(argv)
     lorenz = LorenzSystem(
-        args.time_start,
-        args.time_end,
-        args.time_points_count,
-        args.initial_points,
-        args.sigma,
-        args.rho,
-        args.beta,
+        time_line=TimeLine(args.time_start, args.time_end, args.time_points_count),
+        parameters=LorenzParameters(args.sigma, args.rho, args.beta),
+        initial_points=args.initial_points,
     )
     solution_points = lorenz.solve()
     plot_lorenz_attractor(solution_points)
