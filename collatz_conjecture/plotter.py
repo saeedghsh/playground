@@ -6,7 +6,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
-from collatz_sequence import CollatzSequences
+from collatz import CollatzSequences
 from matplotlib import animation
 
 BACKEND = ["Agg", "TkAgg", "Qt5Agg"][2]

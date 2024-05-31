@@ -4,7 +4,7 @@ import argparse
 import sys
 from typing import Sequence
 
-from collatz_sequence import CollatzSequences
+from collatz import CollatzSequences
 from plotter import plot_sequences_as_graph, plot_sequences_as_timeseries_animated
 from utils import memory_guard_decorator
 
