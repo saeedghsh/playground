@@ -1,9 +1,18 @@
 # Playground
 
+[![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/saeedghsh/playground/blob/master/LICENSE)  
+[![black](https://github.com/saeedghsh/playground/actions/workflows/formatting.yml/badge.svg?branch=master)](https://github.com/saeedghsh/playground/actions/workflows/formatting.yml)
+[![pylint](https://github.com/saeedghsh/playground/actions/workflows/pylint.yml/badge.svg?branch=master)](https://github.com/saeedghsh/playground/actions/workflows/pylint.yml)
+[![pytest](https://github.com/saeedghsh/playground/actions/workflows/pytest.yml/badge.svg?branch=master)](https://github.com/saeedghsh/playground/actions/workflows/pytest.yml)
+[![pytest-cov](https://github.com/saeedghsh/playground/actions/workflows/pytest-cov.yml/badge.svg?branch=master)](https://github.com/saeedghsh/playground/actions/workflows/pytest-cov.yml)
+[![mypy](https://github.com/saeedghsh/playground/actions/workflows/type-check.yml/badge.svg?branch=master)](https://github.com/saeedghsh/playground/actions/workflows/type-check.yml)
+
+
 * Lorenz system ([read more](https://github.com/saeedghsh/playground/blob/master/docs/lorenz_system.md)).
 * Collatz conjecture ([read more](https://github.com/saeedghsh/playground/blob/master/docs/collatz_conjecture.md)).
 * Stochastic processes ([read more](https://github.com/saeedghsh/playground/blob/master/docs/stochastic_processes.md)).
 * Coordinate transformation ([read more](https://github.com/saeedghsh/playground/blob/master/docs/transformation.md)).
+* Chaotic systems  ([read more](https://github.com/saeedghsh/playground/blob/master/docs/chaotic_system.md)).
 
 Next in line:
 * [Ackermann steering geometry](https://en.m.wikipedia.org/wiki/Ackermann_steering_geometry)
@@ -54,11 +63,10 @@ $ pyreverse -o svg -p tests/*.py
 ```
 
 ## Laundry list
-* [ ] update the commands under Pyreverse section
 * [ ] unittest is virtually non-existent
+* [ ] update the commands under Pyreverse section
 * [ ] There are too many warning suppression, remove and fix
-* [ ] each subdirectory should have a proper `README.md`
-* [ ] list all sub-projects in this repo here in this `README.md`
+
 
 # License
 ```
