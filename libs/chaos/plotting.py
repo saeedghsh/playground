@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import matplotlib.widgets
 from scipy import fftpack
 
-from .logisticmap import LogisticMap
+from libs.chaos.logistic_map import LogisticMap
 
 
 class LogisticMapFigure:

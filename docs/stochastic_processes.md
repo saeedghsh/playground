@@ -4,7 +4,7 @@ Python implementation of Simple Stochastic Processes (e.g. Simple Random Walk).
 Right now it is mainly a sandbox to play with `matplotlib` slider.
 
 <p align="center">
-	<img src="https://github.com/saeedghsh/playground/blob/master/stochastic_processes/animation.gif" width="900">
+	<img src="https://github.com/saeedghsh/playground/blob/master/images/random_walk_animation.gif" width="900">
 </p>
 
 ## Usage

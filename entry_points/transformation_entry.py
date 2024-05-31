@@ -5,8 +5,8 @@ import argparse
 import sys
 from typing import Sequence
 
-from visualization.coordinate_frame import CoordinateFrame
-from visualization.visualizer import Visualizer
+from libs.transformation.visualization.coordinate_frame import CoordinateFrame
+from libs.transformation.visualization.visualizer import Visualizer
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover

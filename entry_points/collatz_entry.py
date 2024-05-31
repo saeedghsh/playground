@@ -4,9 +4,9 @@ import argparse
 import sys
 from typing import Sequence
 
-from collatz.collatz import CollatzSequences
-from collatz.plotting import plot_sequences_as_graph, plot_sequences_as_timeseries_animated
-from collatz.utils import memory_guard_decorator
+from libs.collatz.collatz import CollatzSequences
+from libs.collatz.plotting import plot_sequences_as_graph, plot_sequences_as_timeseries_animated
+from libs.collatz.utils import memory_guard_decorator
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover
@@ -22,7 +22,7 @@ def _main(argv: Sequence[str]):
     args = _parse_arguments(argv)
     collatz_sequences = CollatzSequences(args.start, args.end)
     if args.plot == "timeseries":
-        plot_sequences_as_timeseries_animated(collatz_sequences.sequences, time_delay=10)
+        plot_sequences_as_timeseries_animated(collatz_sequences, time_delay=10)
     elif args.plot == "graph":
         plot_sequences_as_graph(collatz_sequences)
     else:

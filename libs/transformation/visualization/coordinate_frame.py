@@ -3,14 +3,14 @@ from typing import Tuple
 
 import mayavi.mlab  # pylint: disable=import-error
 import mayavi.modules  # pylint: disable=import-error
-import numpy
+import numpy as np
 
 
 class CoordinateFrame:
     # pylint: disable=missing-class-docstring
     def __init__(
         self,
-        pose: numpy.ndarray = numpy.eye(4),
+        pose: np.ndarray = np.eye(4),
         name: str = "coordinate_frame",
         color_map: str = "rgb",
     ):
@@ -22,31 +22,31 @@ class CoordinateFrame:
 
     def __repr__(self):
         s = "Coordinate frame with pose:\n{s}"
-        return s.format(numpy.array2string(self._pose))
+        return s.format(np.array2string(self._pose))
 
     @staticmethod
     def _scalar_colors(color_map: str):
         """three sets of colors (rgba channels) for the three axes"""
         if color_map == "rgb":
-            colors = numpy.array(
+            colors = np.array(
                 [
                     [255, 0, 0, 255],
                     [0, 255, 0, 255],
                     [0, 0, 255, 255],
                 ]
-            ).astype(numpy.uint8)
+            ).astype(np.uint8)
         elif color_map == "white":
-            colors = (numpy.ones((3, 4)) * 255).astype(numpy.uint8)
+            colors = (np.ones((3, 4)) * 255).astype(np.uint8)
         else:
             print("Warning: color_map is not recognizable, setting to white")
-            colors = (numpy.ones((3, 4)) * 255).astype(numpy.uint8)
+            colors = (np.ones((3, 4)) * 255).astype(np.uint8)
 
         return colors
 
     @staticmethod
     def _coordinate_frame_from_pose(
-        pose: numpy.ndarray,
-    ) -> Tuple[numpy.ndarray, numpy.ndarray]:
+        pose: np.ndarray,
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """represent a given 6D pose as a coordinate frame
 
         * pose is represented as a 4x4 transformation matrix
@@ -60,14 +60,14 @@ class CoordinateFrame:
         """
         origin = pose[0:3, 3]
         rotate = pose[:3, :3]
-        axes = numpy.array(
+        axes = np.array(
             [
-                numpy.dot(rotate, numpy.array([1, 0, 0])),
-                numpy.dot(rotate, numpy.array([0, 1, 0])),
-                numpy.dot(rotate, numpy.array([0, 0, 1])),
+                np.dot(rotate, np.array([1, 0, 0])),
+                np.dot(rotate, np.array([0, 1, 0])),
+                np.dot(rotate, np.array([0, 0, 1])),
             ]
         )
-        origin = numpy.tile(origin, (3, 1))
+        origin = np.tile(origin, (3, 1))
         return origin, axes
 
     def draw(self, figure: mayavi.core.scene.Scene):
@@ -94,7 +94,7 @@ class CoordinateFrame:
         self._coordinate_frame.glyph.color_mode = "color_by_scalar"
         self._coordinate_frame.module_manager.scalar_lut_manager.lut.table = self._colors
 
-    def update(self, pose: numpy.ndarray):
+    def update(self, pose: np.ndarray):
         """Update a previously drawn coordinate frame
 
         for coordinate_frame see self.draw.__doc__

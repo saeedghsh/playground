@@ -5,11 +5,11 @@ import argparse
 import sys
 from typing import Sequence
 
-from chaos.logisticmap import LogisticMap
-from chaos.plotting import LogisticMapFigure
+from libs.chaos.logistic_map import LogisticMap
+from libs.chaos.plotting import LogisticMapFigure
 
 
-def _main_logisticmap(args: argparse.Namespace) -> None:
+def _main_logistic_map(args: argparse.Namespace) -> None:
     logisticmap = LogisticMap(r=0.0, length=args.length, count=args.count)
     _ = LogisticMapFigure(logisticmap)
 
@@ -20,8 +20,8 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     subparsers = parser.add_subparsers()
-    logisticmap_parser = subparsers.add_parser("logisticmap")
-    logisticmap_parser.set_defaults(func=_main_logisticmap)
+    logisticmap_parser = subparsers.add_parser("logistic-map")
+    logisticmap_parser.set_defaults(func=_main_logistic_map)
     logisticmap_parser.add_argument(
         "-c", "--count", type=int, default=100, help="number of the processes"
     )

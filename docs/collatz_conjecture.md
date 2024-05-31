@@ -14,4 +14,4 @@ The sequence generated as follow:
 2. next number := multiply by 3 and add 1 if it's odd, divide by two if it's even
 3. keep applying the step 2 until "next number" is 1.
 
-![alt text](https://github.com/saeedghsh/playground/blob/master/collatz_conjecture/images/collatz_sequence.gif)
+![alt text](https://github.com/saeedghsh/playground/blob/master/images/collatz_sequence.gif)

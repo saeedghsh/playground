@@ -5,8 +5,8 @@ import argparse
 import sys
 from typing import Sequence
 
-from plotting import SlidingFigure
-from simple_random_walk import SimpleRandomWalk
+from libs.stochastic_processes.plotting import SlidingFigure
+from libs.stochastic_processes.random_walk import SimpleRandomWalk
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover

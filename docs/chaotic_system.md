@@ -3,7 +3,7 @@ Python implementation and experimentation with few simplistic chaotic systems.
 
 * Logistic Map: <img src="https://render.githubusercontent.com/render/math?math=x_{t %2B 1}=rx_{t}(x_{t} %2B 1)">  
   <p align="center">
-      <img src="https://github.com/saeedghsh/ChaoticSystems/blob/master/images/logisticmap_animation.gif" width="900">
+      <img src="https://github.com/saeedghsh/playground/blob/master/images/logisticmap_animation.gif" width="900">
   </p>
 
 ## Usage
@@ -15,22 +15,6 @@ for help:
 ```bash
 python main.py -h
 python main.py logisticmap -h
-```
-
-## Pyreverse : UML Diagrams for Python
-```bash
-$ pip install pylint # pyreverse is now part of pylint
-$ cd ~/code/ChaoticSystems
-$ pyreverse -o svg -p chaos chaos/*.py
-$ pyreverse -o svg -p chaoticSystems main.py
-$ pyreverse -o svg -p tests/*.py
-# -a N, -A    depth of research for ancestors
-# -s N, -S    depth of research for associated classes
-# -A, -S      all ancestors, resp. all associated
-# -m[yn]      add or remove the module name
-# -f MOD      filter the attributes : PUB_ONLY/SPECIAL/OTHER/ALL
-# -k          show only the classes (no attributes and methods)
-# -b          show 'builtin' objects
 ```
 
 ## laundry list
