@@ -68,11 +68,11 @@ class SlidingFigure:
 
     def update_hist(self, idx: int):
         self._axes[1].cla()
-        self._axes[1].hist(self._X[:, :idx].reshape(-1), bins=self._bins)
+        self._axes[1].hist(self._X[:, :idx].reshape(-1), bins=list(self._bins))
         self._axes[1].set_title('histogram of all "simple random walks" values')
         self._axes[1].set_xlabel("X")
         self._axes[1].set_ylabel("distribution")
-        self._axes[1].set_xlim([self._bins.min(), self._bins.max()])
+        self._axes[1].set_xlim((self._bins.min(), self._bins.max()))
 
     def update(self, _: Any):
         idx = int(self._time_slider.val)
