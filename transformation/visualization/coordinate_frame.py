@@ -36,10 +36,10 @@ class CoordinateFrame:
                 ]
             ).astype(numpy.uint8)
         elif color_map == "white":
-            colors = numpy.ones((3, 4), dtype=numpy.uint8) * 255
+            colors = (numpy.ones((3, 4)) * 255).astype(numpy.uint8)
         else:
             print("Warning: color_map is not recognizable, setting to white")
-            colors = numpy.ones((3, 4), dtype=numpy.uint8) * 255
+            colors = (numpy.ones((3, 4)) * 255).astype(numpy.uint8)
 
         return colors
 

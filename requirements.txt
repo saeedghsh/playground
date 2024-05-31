@@ -1,4 +1,3 @@
-## general
 pylint
 pytest
 pytest-mock
@@ -6,22 +5,12 @@ pytest-cov
 black
 isort
 mypy
-
-## chaos and stochastic
 matplotlib
 numpy
-
-## Colllatz
 psutil
-# numpy
-# matplotlib
 networkx
-# apt install python3-tk
 PyQt5
 scipy
-
-## for transformation
-# PyQt5==5.14.2 # for mayavi
 vtk
-mayavi==4.7.3
+mayavi
 
