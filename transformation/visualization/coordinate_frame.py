@@ -27,10 +27,6 @@ class CoordinateFrame:
     @staticmethod
     def _scalar_colors(color_map: str):
         """three sets of colors (rgba channels) for the three axes"""
-        if color_map not in ["rgb", "white"]:
-            print("Warning: color_map is not recognizable, setting to white")
-            colors = numpy.ones((3, 4), dtype=numpy.uint8) * 255
-
         if color_map == "rgb":
             colors = numpy.array(
                 [
@@ -40,6 +36,9 @@ class CoordinateFrame:
                 ]
             ).astype(numpy.uint8)
         elif color_map == "white":
+            colors = numpy.ones((3, 4), dtype=numpy.uint8) * 255
+        else:
+            print("Warning: color_map is not recognizable, setting to white")
             colors = numpy.ones((3, 4), dtype=numpy.uint8) * 255
 
         return colors
