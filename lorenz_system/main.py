@@ -4,8 +4,8 @@ import argparse
 import sys
 from typing import Sequence
 
-from lorenz import LorenzParameters, LorenzSystem, TimeLine
-from plotter import plot_lorenz_attractor
+from lorenz.lorenz import LorenzParameters, LorenzSystem, TimeLine
+from lorenz.plotting import plot_lorenz_attractor
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover

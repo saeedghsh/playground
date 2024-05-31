@@ -4,9 +4,9 @@ import argparse
 import sys
 from typing import Sequence
 
-from collatz import CollatzSequences
-from plotter import plot_sequences_as_graph, plot_sequences_as_timeseries_animated
-from utils import memory_guard_decorator
+from collatz.collatz import CollatzSequences
+from collatz.plotting import plot_sequences_as_graph, plot_sequences_as_timeseries_animated
+from collatz.utils import memory_guard_decorator
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover
