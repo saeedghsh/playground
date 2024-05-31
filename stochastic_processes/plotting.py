@@ -1,5 +1,6 @@
 # pylint: disable=missing-module-docstring
 from typing import Any
+
 import matplotlib.pyplot as plt
 import matplotlib.widgets
 import numpy as np
