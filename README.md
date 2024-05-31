@@ -1,7 +1,14 @@
 # Playground
 
+## Dependencies
+
+```bash
+apt install python3-tk
+pip install -r requirements.txt
+```
 
 ## Code quality checks
+
 ```bash
 $ black . --check
 $ isort . --check-only
@@ -11,6 +18,8 @@ $ xvfb-run --auto-servernum pytest
 $ xvfb-run --auto-servernum pytest --cov=.
 $ xvfb-run --auto-servernum pytest --cov=. --cov-report html; firefox htmlcov/index.html
 ```
+
+
 
 ## To play with
 * [Ackermann steering geometry](https://en.m.wikipedia.org/wiki/Ackermann_steering_geometry)
@@ -23,6 +32,7 @@ $ xvfb-run --auto-servernum pytest --cov=. --cov-report html; firefox htmlcov/in
 * [ ] unittest is virtually non-existent
 * [ ] each subdirectory should have a proper `README.md`
 * [ ] list all sub-projects in this repo here in this `README.md`
+* [ ] There are too many warning suppression, remove and fix
 
 # License
 ```
