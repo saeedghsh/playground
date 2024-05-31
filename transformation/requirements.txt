@@ -1,4 +1,0 @@
-numpy==1.19.0
-matplotlib==3.2.2
-mayavi==4.7.3
-PyQt5==5.14.2 # for mayavi
