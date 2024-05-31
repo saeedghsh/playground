@@ -4,7 +4,7 @@ import numpy as np
 
 # to be able to import `chaos.logisticmap`, it is important that this
 # directory (test) contains the `__init__.py`
-from chaos.logisticmap import LogisticMap, logistic_map
+from chaos.logisticmap import LogisticMap, _logistic_map
 
 R = 2.0
 COUNT = 3
@@ -62,7 +62,7 @@ class TestLogisticMap:
 
     def test_get_xy(self):
         x = np.linspace(0, 1, 100)
-        y = logistic_map(R, x)
+        y = _logistic_map(R, x)
         lm = _initiate_logistic_map()
         assert (lm.xy == np.array([x, y]).T).all()
 

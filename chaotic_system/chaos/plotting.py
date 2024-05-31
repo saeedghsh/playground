@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import matplotlib.widgets
 from scipy import fftpack
 
-from . import logisticmap
+from .logisticmap import LogisticMap
 
 
 class LogisticMapFigure:
@@ -17,7 +17,7 @@ class LogisticMapFigure:
     # pylint: disable=missing-function-docstring
     # pylint: disable=too-many-instance-attributes
     # pylint: disable=too-few-public-methods
-    def __init__(self, logistic_map: logisticmap.LogisticMap):
+    def __init__(self, logistic_map: LogisticMap):
         self._lm = logistic_map
 
         self._fig = plt.figure(figsize=(18, 8))

@@ -8,17 +8,16 @@ from typing import List, Optional
 import numpy as np
 
 
-def logistic_map(r: float, x: np.array) -> np.array:  # pylint: disable=missing-function-docstring
+def _logistic_map(r: float, x: np.ndarray) -> np.ndarray:
     return r * x * (1 - x)
 
 
-def cobweb(r: float, x0: float, length: int) -> np.array:
-    # pylint: disable=missing-function-docstring
+def _cobweb(r: float, x0: float, length: int) -> np.ndarray:
     xy = np.zeros((length, 2))
     xy[0, :] = (x0, 0)
     for n in range(1, length - 1, 2):
         xy[n, 0] = xy[n - 1, 0]
-        xy[n, 1] = logistic_map(r, xy[n - 1, 0])
+        xy[n, 1] = _logistic_map(r, xy[n - 1, 0])
         xy[n + 1, 0] = xy[n, 1]
         xy[n + 1, 1] = xy[n, 1]
     return xy
@@ -46,7 +45,7 @@ class LogisticMap:
 
         # the logistic map curve and the cobweb
         x = np.linspace(0, 1, 100)
-        y = logistic_map(r, x)
+        y = _logistic_map(r, x)
         self._xy = np.array([x, y]).T
         self._set_coweb()
 
@@ -72,7 +71,7 @@ class LogisticMap:
         self._r = r
         length = self._x.shape[0]
         x = np.linspace(0, 1, 100)
-        y = logistic_map(r, x)
+        y = _logistic_map(r, x)
         self._xy = np.array([x, y]).T
         self._set_coweb()
         self._reset()
@@ -108,11 +107,11 @@ class LogisticMap:
     def _next(self, steps: int = 1):
         for _ in range(steps):
             self._x = np.append(
-                self._x, np.atleast_2d(logistic_map(self._r, self._x[-1, :])), axis=0
+                self._x, np.atleast_2d(_logistic_map(self._r, self._x[-1, :])), axis=0
             )
 
     def _set_coweb(self):
-        self._cobweb = cobweb(self._r, self._x0[0], self._length)
+        self._cobweb = _cobweb(self._r, self._x0[0], self._length)
 
     def scramble(self):
         """Regenerates random initial values, and reconstructs the processes"""
