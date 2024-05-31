@@ -24,7 +24,7 @@ def _main(argv: Sequence[str]):
     if args.plot == "timeseries":
         plot_sequences_as_timeseries_animated(collatz_sequences.sequences, time_delay=10)
     elif args.plot == "graph":
-        plot_sequences_as_graph(collatz_sequences.graph)
+        plot_sequences_as_graph(collatz_sequences)
     else:
         print(f"selected plotting mode is not supported: {args.plot}")
 

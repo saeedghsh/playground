@@ -8,12 +8,17 @@ import networkx as nx
 import numpy as np
 from matplotlib import animation
 
+from collatz_sequence import CollatzSequences
+
 BACKEND = ["Agg", "TkAgg", "Qt5Agg"][2]
 matplotlib.use(BACKEND)
 
 
-def plot_sequences_as_timeseries_animated(sequences: Dict[int, list], time_delay: int = 200):
+def plot_sequences_as_timeseries_animated(
+    collatz_sequences: CollatzSequences, time_delay: int = 200
+):
     """Animate the plotting of sequences as time series."""
+    sequences: Dict[int, list] = collatz_sequences.sequences
 
     def init():
         ax.set_xlim(0, max(len(s) for s in sequences.values()) - 1)
@@ -63,16 +68,9 @@ def plot_sequences_as_timeseries_animated(sequences: Dict[int, list], time_delay
     plt.show()
 
 
-def _vertical_layout(graph: nx.Graph) -> dict:
-    pos = {}
-    sorted_nodes = sorted(graph.nodes())
-    for i, node in enumerate(sorted_nodes):
-        # (x, y) coordinates; all x-coordinates are 0, y-coordinates are negative index
-        pos[node] = (0, -i)
-    return pos
-
-
-def plot_sequences_as_graph(graph: nx.DiGraph):  # pylint: disable=missing-function-docstring
+def plot_sequences_as_graph(collatz_sequences: CollatzSequences):
+    # pylint: disable=missing-function-docstring
+    graph: nx.DiGraph = collatz_sequences.graph
     layouts = {
         "spring_layout": nx.spring_layout(graph),
         "circular_layout": nx.circular_layout(graph),
@@ -82,10 +80,9 @@ def plot_sequences_as_graph(graph: nx.DiGraph):  # pylint: disable=missing-funct
         "kamada_kawai_layout": nx.kamada_kawai_layout(graph),
         "planar_layout": nx.planar_layout(graph),
         "spiral_layout": nx.spiral_layout(graph),
-        "vertical_layout": _vertical_layout(graph),
     }
 
-    _, axes = plt.subplots(3, 3, figsize=(16, 8))
+    _, axes = plt.subplots(2, 4, figsize=(16, 8))
     axes = axes.flatten()
 
     for ax, (layout_name, pos) in zip(axes, layouts.items()):
