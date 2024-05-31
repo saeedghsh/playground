@@ -19,6 +19,11 @@ $ xvfb-run --auto-servernum pytest --cov=. --cov-report html; firefox htmlcov/in
   * https://mareknarozniak.com/2020/06/22/constraint-programming/
 * 
 
+## Laundry list
+* [ ] unittest is virtually non-existent
+* [ ] each subdirectory should have a proper `README.md`
+* [ ] list all sub-projects in this repo here in this `README.md`
+
 # License
 ```
 Copyright (C) Saeed Gholami Shahbandi
