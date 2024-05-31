@@ -1,12 +1,13 @@
-#!/usr/bin/env python
-
+# pylint: disable=missing-module-docstring
 from typing import Tuple
 
-import mayavi.mlab
+import mayavi.mlab  # pylint: disable=import-error
+import mayavi.modules  # pylint: disable=import-error
 import numpy
 
 
 class CoordinateFrame:
+    # pylint: disable=missing-class-docstring
     def __init__(
         self,
         pose: numpy.ndarray = numpy.eye(4),
@@ -17,17 +18,17 @@ class CoordinateFrame:
         self._name = name
         self._colors = self._scalar_colors(color_map)
         self._origin, self._axes = self._coordinate_frame_from_pose(pose)
-        self._coordinate_frame = None
+        self._coordinate_frame: mayavi.modules.vectors.Vectors
 
     def __repr__(self):
-        repr = "Coordinate frame with pose:\n{s}"
-        return repr.format(numpy.array2string(self._pose))
+        s = "Coordinate frame with pose:\n{s}"
+        return s.format(numpy.array2string(self._pose))
 
     @staticmethod
     def _scalar_colors(color_map: str):
         """three sets of colors (rgba channels) for the three axes"""
         if color_map not in ["rgb", "white"]:
-            print("Warning: color_map is not recognizable, seting to white")
+            print("Warning: color_map is not recognizable, setting to white")
             colors = numpy.ones((3, 4), dtype=numpy.uint8) * 255
 
         if color_map == "rgb":
@@ -70,7 +71,7 @@ class CoordinateFrame:
         origin = numpy.tile(origin, (3, 1))
         return origin, axes
 
-    def draw(self, figure: mayavi.core.scene.Scene) -> mayavi.modules.vectors.Vectors:
+    def draw(self, figure: mayavi.core.scene.Scene):
         """Draw a coordinate frame (XYZ axes) in the figure
 
         draws the basis of a coordinate frame (x, y, and z axes)
@@ -95,7 +96,7 @@ class CoordinateFrame:
         self._coordinate_frame.module_manager.scalar_lut_manager.lut.table = self._colors
 
     def update(self, pose: numpy.ndarray):
-        """Update a prviously drawn coordinate frame
+        """Update a previously drawn coordinate frame
 
         for coordinate_frame see self.draw.__doc__
         for pose see self.coordinate_frame_from_pose.__doc__
