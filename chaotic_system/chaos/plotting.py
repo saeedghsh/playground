@@ -1,9 +1,8 @@
-"""Functionalities for plotting chaotic processess
+"""Functionalities for plotting chaotic processes
 
 SlidingFigure: An object to plot the "logistic map" curve and
     processes, with interactive control of the "r" parameters of the
     "logistic map"
-
 """
 
 import matplotlib.pyplot as plt
@@ -14,27 +13,11 @@ from . import logisticmap
 
 
 class LogisticMapFigure:
-    """A plotting object
-
-    Attributes
-    ----------
-    xxx
-
-    Methods
-    -------
-    update(val)
-        given new values, the method updates and redraws
-    """
-
+    # pylint: disable=missing-class-docstring
+    # pylint: disable=missing-function-docstring
+    # pylint: disable=too-many-instance-attributes
+    # pylint: disable=too-few-public-methods
     def __init__(self, logistic_map: logisticmap.LogisticMap):
-        """
-        Parameters
-        ----------
-        logistic_map: logisticmap.LogisticMap,
-            a logistic map object
-        """
-
-        assert isinstance(logistic_map, logisticmap.LogisticMap)
         self._lm = logistic_map
 
         self._fig = plt.figure(figsize=(18, 8))
@@ -57,7 +40,7 @@ class LogisticMapFigure:
         plt.show()
 
     def _plot_logistic_map(self, axis):
-        self._curve_plot = axis.plot(self._lm.XY[:, 0], self._lm.XY[:, 1], label="logistic map")[0]
+        self._curve_plot = axis.plot(self._lm.xy[:, 0], self._lm.xy[:, 1], label="logistic map")[0]
         axis.plot([0, 1], [0, 1], "k", label="linear")
         axis.set_title("logistic map vs. linear")
         axis.set_xlabel("x[t-1]")
@@ -71,47 +54,38 @@ class LogisticMapFigure:
         )[0]
 
     def _plot_chaotic_processes(self, axis):
-        self._processes_plot = axis.plot(self._lm.X, "k", linewidth=0.3, alpha=0.6)
+        self._processes_plot = axis.plot(self._lm.x, "k", linewidth=0.3, alpha=0.6)
         title = (
             "{:d} chaotic processes (with random initial points) generated from the logistic map"
         )
-        axis.set_title(title.format(self._lm.X.shape[1]))
+        axis.set_title(title.format(self._lm.x.shape[1]))
         axis.set_ylim([0, 1])
         axis.set_xlabel("t")
         axis.set_ylabel("x[t]")
 
     def _plot_frequency_spectrum(self, axis):
-        X = fftpack.fft(self._lm.X[:, 0])
-        self._spectrum_plot = axis.plot(X, "k", linewidth=0.3, alpha=0.6)[0]
+        x = fftpack.fft(self._lm.x[:, 0])
+        self._spectrum_plot = axis.plot(x, "k", linewidth=0.3, alpha=0.6)[0]
         axis.set_title("frequency spectrum")
-        axis.set_ylim([X.real.min() - 1, X.real.max() + 1])
+        axis.set_ylim([x.real.min() - 1, x.real.max() + 1])
         axis.set_xlabel("f")
         axis.set_ylabel("spectrum")
 
-    def update(self, val):
-        """
-        Parameters
-        ----------
-        val: numpy.float64,
-            passed to this function by the "slider.on_changed"
-        """
-
+    def update(self, _):
         self._lm.r = self._r_slider.val
-
-        self._curve_plot.set_ydata(self._lm.XY[:, 1])
-
+        self._curve_plot.set_ydata(self._lm.xy[:, 1])
         self._cobweb_plot.set_data(self._lm.cobweb[:, 0], self._lm.cobweb[:, 1])
 
         for i, p in enumerate(self._processes_plot):
-            p.set_ydata(self._lm.X[:, i])
+            p.set_ydata(self._lm.x[:, i])
 
-        X = fftpack.fft(self._lm.X[:, 0])
-        self._spectrum_plot.set_ydata(X)
-        self._spectrum_plot.axes.set_ylim([X.real.min() - 1, X.real.max() + 1])
+        x = fftpack.fft(self._lm.x[:, 0])
+        self._spectrum_plot.set_ydata(x)
+        self._spectrum_plot.axes.set_ylim([x.real.min() - 1, x.real.max() + 1])
 
         self._fig.canvas.draw_idle()
 
-        # # for saving plots and creating animated gifs
+        # # for saving plots and creating animated gif
         # plt.savefig('{:.5f}'.format(self._lm.r).replace('.', '') + '.png',
         #             facecolor='w', edgecolor='w',
         #             format='png', transparent=False,

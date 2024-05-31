@@ -1,4 +1,5 @@
 # pylint: disable=missing-module-docstring
+from typing import Any
 import matplotlib.pyplot as plt
 import matplotlib.widgets
 import numpy as np
@@ -10,7 +11,6 @@ class SlidingFigure:
     # pylint: disable=too-many-instance-attributes
     # pylint: disable=invalid-name
     def __init__(self, random_walks: list):
-        """"""
         assert isinstance(random_walks, list) and len(random_walks)
 
         self._random_walks = random_walks
@@ -44,7 +44,7 @@ class SlidingFigure:
         self._lines = [
             axis.plot(rw.T[: self._t0], rw.X[: self._t0], alpha=0.7)[0] for rw in self._random_walks
         ]
-        axis.plot(self._T, np.sqrt(self._T), "k-.", linewidth=0.75, label="$\pm\sqrt{t}$")
+        axis.plot(self._T, np.sqrt(self._T), "k-.", linewidth=0.75, label=r"$\pm\sqrt{t}$")
         axis.plot(self._T, -np.sqrt(self._T), "k-.", linewidth=0.75)
         axis.set_title('a collection of "simple random walks"')
         axis.set_xlabel("t")
@@ -73,7 +73,7 @@ class SlidingFigure:
         self._axes[1].set_ylabel("distribution")
         self._axes[1].set_xlim([self._bins.min(), self._bins.max()])
 
-    def update(self, val):
+    def update(self, _: Any):
         idx = int(self._time_slider.val)
         self.update_lines(idx)
         self.update_hist(idx)
