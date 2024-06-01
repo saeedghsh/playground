@@ -3,16 +3,18 @@
 Currently it only contains one object, namely "LogisticMap"
 """
 
-from typing import List, Optional
+from typing import List
 
 import numpy as np
 
 
 def _logistic_map(r: float, x: np.ndarray) -> np.ndarray:
+    """Return next value of a logistic map, give parameter r and current value x."""
     return r * x * (1 - x)
 
 
 def _cobweb(r: float, x0: float, length: int) -> np.ndarray:
+    """Return the Cobweb diagram of a logistic map sequence."""
     xy = np.zeros((length, 2))
     xy[0, :] = (x0, 0)
     for n in range(1, length - 1, 2):
@@ -31,35 +33,21 @@ class LogisticMap:
     to "logistic map"
     """
 
-    def __init__(
-        self, r: float, x0: Optional[List[float]] = None, length: int = 200, count: int = 100
-    ):
+    def __init__(self, r: float, length: int, count: int):
         self._r = r
         self._count = count
         self._length = length
 
         # processes generated from the logistic map
-        self._x0 = x0 or list(np.random.random(count))
+        self._x0 = list(np.random.random(count))
         self._x = np.array([self._x0])
         self._next(steps=length - 1)
 
         # the logistic map curve and the cobweb
-        x = np.linspace(0, 1, 100)
+        x = np.linspace(0, 1, self._count)
         y = _logistic_map(r, x)
         self._xy = np.array([x, y]).T
         self._set_coweb()
-
-    def __str__(self):
-        s = "LogisticMap(r={:.2f}, x0=["
-        s += ", ".join(["{:.2f}"] * len(self._x0))
-        s += "])"
-        return s.format(self._r, *(self._x0))
-
-    def __repr__(self):
-        return self.__str__()
-
-    def __len__(self):
-        return self._x.shape[1]
 
     @property
     def r(self):
@@ -70,7 +58,7 @@ class LogisticMap:
         assert isinstance(r, float) and 0 <= r <= 4
         self._r = r
         length = self._x.shape[0]
-        x = np.linspace(0, 1, 100)
+        x = np.linspace(0, 1, self._count)
         y = _logistic_map(r, x)
         self._xy = np.array([x, y]).T
         self._set_coweb()
@@ -112,10 +100,3 @@ class LogisticMap:
 
     def _set_coweb(self):
         self._cobweb = _cobweb(self._r, self._x0[0], self._length)
-
-    def scramble(self):
-        """Regenerates random initial values, and reconstructs the processes"""
-        self.x0 = list(np.random.random(self._count))
-        self._set_coweb()
-        self._reset()
-        self._next(steps=self._length - 1)
