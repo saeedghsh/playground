@@ -5,7 +5,7 @@ from functools import partial
 import numpy as np
 import pytest
 
-from libs.chaos.logistic_map import cobweb, logistic_map, sequence
+from libs.chaos.logistic_map import cobweb, curve, logistic_map, sequence
 
 
 def _linear_map(x: float) -> float:
@@ -124,6 +124,42 @@ def test_sequence_with_linear_map(map_function, x0, length, expected):
 )
 def test_sequence_with_logistic_map(map_function, x0, length, expected):
     result = sequence(map_function, x0, length)
+    np.testing.assert_allclose(
+        result, expected, rtol=1e-5, err_msg=f"Expected {expected}, got {result}"
+    )
+
+
+@pytest.mark.parametrize(
+    "map_function, x, expected",
+    [
+        (_linear_map, np.array([0.0, 0.5, 1.0]), np.array([[0.0, 0.0], [0.5, 1.0], [1.0, 2.0]])),
+        (_linear_map, np.array([-1.0, 0.0, 1.0]), np.array([[-1.0, -2.0], [0.0, 0.0], [1.0, 2.0]])),
+    ],
+)
+def test_curve_linear_map(map_function, x, expected):
+    result = curve(map_function, x)
+    np.testing.assert_allclose(
+        result, expected, rtol=1e-5, err_msg=f"Expected {expected}, got {result}"
+    )
+
+
+@pytest.mark.parametrize(
+    "map_function, x, expected",
+    [
+        (
+            partial(logistic_map, r=2.5),
+            np.array([0.0, 0.5, 1.0]),
+            np.array([[0.0, 0.0], [0.5, 0.625], [1.0, 0.0]]),
+        ),
+        (
+            partial(logistic_map, r=3.7),
+            np.array([0.0, 0.1, 0.5]),
+            np.array([[0.0, 0.0], [0.1, 0.333], [0.5, 0.925]]),
+        ),
+    ],
+)
+def test_curve_logistic_map(map_function, x, expected):
+    result = curve(map_function, x)
     np.testing.assert_allclose(
         result, expected, rtol=1e-5, err_msg=f"Expected {expected}, got {result}"
     )
