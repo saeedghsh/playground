@@ -1,11 +1,12 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=missing-function-docstring
 from functools import partial
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
 
-from libs.chaos.logistic_map import cobweb, curve, logistic_map, sequence
+from libs.chaos.logistic_map import cobweb, curve, generate_data, logistic_map, sequence
 
 
 def _linear_map(x: float) -> float:
@@ -163,6 +164,34 @@ def test_curve_logistic_map(map_function, x, expected):
     np.testing.assert_allclose(
         result, expected, rtol=1e-5, err_msg=f"Expected {expected}, got {result}"
     )
+
+
+@pytest.mark.parametrize(
+    "map_function, sequences_count, sequences_length",
+    [
+        (_linear_map, 3, 5),
+        (partial(logistic_map, r=2.5), 2, 4),
+    ],
+)
+def test_generate_data(map_function, sequences_count, sequences_length):
+    result = generate_data(map_function, sequences_count, sequences_length)
+
+    assert isinstance(result, SimpleNamespace)
+    assert hasattr(result, "sequences")
+    assert hasattr(result, "cobweb_points")
+    assert hasattr(result, "frequency_response")
+    assert hasattr(result, "curve_points")
+
+    assert len(result.sequences) == sequences_count
+    assert all(len(seq) == sequences_length for seq in result.sequences)
+
+    cobweb_shape = (sequences_length, 2)
+    assert result.cobweb_points.shape == cobweb_shape
+
+    assert len(result.frequency_response) == sequences_length
+
+    curve_shape = (100, 2)
+    assert result.curve_points.shape == curve_shape
 
 
 if __name__ == "__main__":
