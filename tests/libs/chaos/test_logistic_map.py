@@ -5,7 +5,12 @@ from functools import partial
 import numpy as np
 import pytest
 
-from libs.chaos.logistic_map import cobweb, logistic_map
+from libs.chaos.logistic_map import cobweb, logistic_map, sequence
+
+
+def _linear_map(x: float) -> float:
+    """A simple map function for testing other function such as cobweb"""
+    return 2 * x
 
 
 @pytest.mark.parametrize(
@@ -26,11 +31,6 @@ def test_logistic_map(r, x, expected):
         )
     else:
         assert result == pytest.approx(expected), f"Expected {expected}, got {result}"
-
-
-def _linear_map(x: float) -> float:
-    """A simple map function for testing cobweb"""
-    return 2 * x
 
 
 @pytest.mark.parametrize(
@@ -71,6 +71,59 @@ def test_cobweb_with_linear_map(map_function, x0, length, expected):
 )
 def test_cobweb_with_logistic_map(map_function, x0, length, expected):
     result = cobweb(map_function, x0, length)
+    np.testing.assert_allclose(
+        result, expected, rtol=1e-5, err_msg=f"Expected {expected}, got {result}"
+    )
+
+
+@pytest.mark.parametrize(
+    "map_function, x0, length, expected",
+    [
+        (_linear_map, 1.0, 5, np.array([1.0, 2.0, 4.0, 8.0, 16.0])),
+        (_linear_map, 0.5, 3, np.array([0.5, 1.0, 2.0])),
+        (_linear_map, 0.0, 4, np.array([0.0, 0.0, 0.0, 0.0])),
+    ],
+)
+def test_sequence_with_linear_map(map_function, x0, length, expected):
+    result = sequence(map_function, x0, length)
+    np.testing.assert_allclose(
+        result, expected, rtol=1e-5, err_msg=f"Expected {expected}, got {result}"
+    )
+
+
+@pytest.mark.parametrize(
+    "map_function, x0, length, expected",
+    [
+        (
+            partial(logistic_map, r=0.2),
+            0.04895206890209158,
+            4,
+            np.array(
+                [
+                    0.04895206890209158,
+                    0.009311152770459293,
+                    0.0018448910409088924,
+                    0.0003682974835912133,
+                ]
+            ),
+        ),
+        (
+            partial(logistic_map, r=3.2),
+            0.30698286022955557,
+            4,
+            np.array(
+                [
+                    0.30698286022955557,
+                    0.6807820280154776,
+                    0.6954171467091554,
+                    0.6777988440705678,
+                ]
+            ),
+        ),
+    ],
+)
+def test_sequence_with_logistic_map(map_function, x0, length, expected):
+    result = sequence(map_function, x0, length)
     np.testing.assert_allclose(
         result, expected, rtol=1e-5, err_msg=f"Expected {expected}, got {result}"
     )
