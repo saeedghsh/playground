@@ -5,13 +5,11 @@ import argparse
 import sys
 from typing import Sequence
 
-from libs.chaos.logistic_map import LogisticMap
-from libs.chaos.plotting import LogisticMapFigure
+from libs.chaos.plotting import LogisticMapVisualizer
 
 
 def _main_logistic_map(args: argparse.Namespace) -> None:
-    logisticmap = LogisticMap(r=0.0, length=args.length, count=args.count)
-    _ = LogisticMapFigure(logisticmap)
+    LogisticMapVisualizer(args.count, args.length)
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover
