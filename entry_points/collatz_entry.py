@@ -18,7 +18,7 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
 
 
 @memory_guard_decorator(threshold=500)
-def _main(argv: Sequence[str]):
+def _main(argv: Sequence[str]):  # pragma: no cover
     args = _parse_arguments(argv)
     collatz_sequences = CollatzSequences(args.start, args.end)
     if args.plot == "timeseries":
