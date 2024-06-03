@@ -16,7 +16,7 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
     return parser.parse_args(argv)
 
 
-def _main(argv: Sequence[str]):
+def _main(argv: Sequence[str]):  # pragma: no cover
     args = _parse_arguments(argv)
     random_walks = [SimpleRandomWalk(args.length) for _ in range(args.count)]
     _ = SlidingFigure(random_walks)

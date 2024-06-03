@@ -17,7 +17,7 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
     return parser.parse_args(argv)
 
 
-def _main(argv: Sequence[str]):
+def _main(argv: Sequence[str]):  # pragma: no cover
     _ = _parse_arguments(argv)
     vis = Visualizer("example")
     reference_frame = CoordinateFrame(name="ref_frame", color_map="white")
