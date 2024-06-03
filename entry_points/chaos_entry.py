@@ -8,7 +8,7 @@ from typing import Sequence
 from libs.chaos.visualizer import LogisticMapVisualizer
 
 
-def _main_logistic_map(args: argparse.Namespace) -> None:
+def _main_logistic_map(args: argparse.Namespace) -> None:  # pragma: no cover
     LogisticMapVisualizer(args.count, args.length)
 
 
@@ -29,7 +29,7 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
     return parser.parse_args(argv)
 
 
-def _main(argv: Sequence[str]):
+def _main(argv: Sequence[str]):  # pragma: no cover
     args = _parse_arguments(argv)
     args.func(args)
 
