@@ -16,7 +16,7 @@ matplotlib.use(BACKEND)
 
 def plot_sequences_as_timeseries_animated(
     collatz_sequences: CollatzSequences, time_delay: int = 200
-):
+):  # pragma: no cover
     """Animate the plotting of sequences as time series."""
     sequences: Dict[int, list] = collatz_sequences.sequences
 
@@ -68,7 +68,7 @@ def plot_sequences_as_timeseries_animated(
     plt.show()
 
 
-def plot_sequences_as_graph(collatz_sequences: CollatzSequences):
+def plot_sequences_as_graph(collatz_sequences: CollatzSequences):  # pragma: no cover
     # pylint: disable=missing-function-docstring
     graph: nx.DiGraph = collatz_sequences.graph
     layouts = {
