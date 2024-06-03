@@ -6,7 +6,7 @@ from typing import Sequence
 
 from libs.collatz.collatz import CollatzSequences
 from libs.collatz.plotting import plot_sequences_as_graph, plot_sequences_as_timeseries_animated
-from libs.collatz.utils import memory_guard_decorator
+from libs.common.utils import memory_guard_decorator
 
 
 def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no cover

@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from libs.collatz.utils import memory_guard_decorator
+from libs.common.utils import memory_guard_decorator
 
 
 def test_memory_guard_decorator():
