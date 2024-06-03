@@ -5,7 +5,7 @@ import argparse
 import sys
 from typing import Sequence
 
-from libs.chaos.plotting import LogisticMapVisualizer
+from libs.chaos.visualizer import LogisticMapVisualizer
 
 
 def _main_logistic_map(args: argparse.Namespace) -> None:
