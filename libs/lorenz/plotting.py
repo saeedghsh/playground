@@ -6,7 +6,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def plot_lorenz_attractor(points: np.ndarray):
+def plot_lorenz_attractor(points: np.ndarray):  # pragma: no cover
     fig = plt.figure()
     ax: Axes3D = fig.add_subplot(111, projection="3d")
     ax.plot(points[0], points[1], points[2])

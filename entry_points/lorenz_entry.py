@@ -20,7 +20,7 @@ def _parse_arguments(argv: Sequence[str]) -> argparse.Namespace:  # pragma: no c
     return parser.parse_args(argv)
 
 
-def _main(argv: Sequence[str]):
+def _main(argv: Sequence[str]):  # pragma: no cover
     args = _parse_arguments(argv)
     lorenz = LorenzSystem(
         time_line=TimeLine(args.time_start, args.time_end, args.time_points_count),
