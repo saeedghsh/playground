@@ -1,18 +1,35 @@
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v"
+addopts = "-v --cov=. --cov-report=term-missing"
 python_files = ["test_*.py"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::duckdb_engine.DuckDBEngineWarning",
+]
+
+
+[tool.coverage.run]
+omit = ["*/tests/*", "*/config-3.py", "*/config.py"]
 
 [tool.pylint]
 init-hook = "import os, sys; sys.path.append(os.getcwd())"
 max-line-length = 100
 
-[tool.pylint.messages_control]
-disable = ["duplicate-code"]
+[tool.pylint."MESSAGES CONTROL"]
+enable = "all"
+disable = [
+    "locally-disabled",
+    "suppressed-message",
+    "duplicate-code",
+    "use-symbolic-message-instead",
+]
+
+[tool.pylint.basic]
+good-names = ["i", "j", "k", "x", "y", "z"]
 
 [tool.black]
 line-length = 100
-target-version = ['py310']
+target-version = ['py312']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -34,8 +51,13 @@ profile = "black"
 line_length = 100
 
 [tool.mypy]
-exclude = '^ignore/'          # a local folder I want to skip type checking
+exclude = '^extras/|^temp/' # local folders I want to skip type checking
 ignore_missing_imports = true
-
-[tool.coverage.run]
-omit = ["*/tests/*"]
+explicit_package_bases = true
+strict = true
+warn_unused_ignores = false # Disable warnings for unused "type: ignore"
+warn_return_any = true
+disable_error_code = [
+    "type-arg", # Missing type parameters for generic type 'ndarray'
+]
+show_error_codes = true
