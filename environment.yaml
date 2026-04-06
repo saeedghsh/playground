@@ -1,0 +1,20 @@
+name: playground
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pylint
+  - pytest
+  - pytest-mock
+  - pytest-cov
+  - black
+  - isort
+  - mypy
+  - matplotlib
+  - numpy
+  - psutil
+  - networkx
+  - pyqt=5
+  - scipy
+  - vtk
+  - mayavi
